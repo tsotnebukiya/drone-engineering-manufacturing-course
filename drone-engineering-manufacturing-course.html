@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A seven-day beginner course from multirotor fundamentals to frame manufacturing, unit economics and a provisional Prototype 1 decision.">
+  <title>Drone Engineering to Manufacturing — Seven-Day Beginner Course</title>
+  <style>
+    :root{
+      --ink:#17201c;--paper:#f3f0e7;--surface:#fffdf7;--surface-2:#e9eee8;
+      --line:#c9c9bc;--green:#0b6b4b;--lime:#b8dc5d;--orange:#ed6a35;
+      --blue:#2156a5;--red:#a63b2b;--amber:#9a6300;--muted:#667068;
+      --verified:#dff3e7;--planning:#fff0c9;--example:#e8effd;--rfq:#f3e4e1;
+      --shadow:0 14px 45px rgba(28,38,32,.08)
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;overflow-x:hidden;background:var(--paper);color:var(--ink);font:16px/1.62 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--blue);text-underline-offset:3px}
+    button,input{font:inherit}
+    .skip{position:absolute;left:-9999px;top:0}.skip:focus{left:12px;z-index:99;background:white;padding:10px}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(23,32,28,.96);color:white;border-bottom:1px solid #35413b}
+    .topbar-inner{max-width:1440px;min-width:0;margin:auto;display:flex;gap:14px;align-items:center;padding:10px 22px}
+    .brand{font-weight:900;letter-spacing:.04em;white-space:nowrap}
+    .topbar nav{display:flex;min-width:0;max-width:100%;gap:6px;overflow:auto;scrollbar-width:none}
+    .topbar nav a{color:white;text-decoration:none;font-size:12px;font-weight:800;padding:8px 10px;border:1px solid transparent;white-space:nowrap}
+    .topbar nav a:hover,.topbar nav a:focus{border-color:#809087;outline:none}
+    main{max-width:1440px;margin:auto}
+    .hero{min-height:700px;display:grid;grid-template-columns:1.05fr .95fr;border-bottom:1px solid var(--line)}
+    .hero-copy{padding:86px 56px 60px;display:flex;flex-direction:column;justify-content:center}
+    .eyebrow{color:var(--green);font-size:12px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+    h1{font-size:clamp(52px,7.6vw,108px);line-height:.88;letter-spacing:-.065em;margin:14px 0 28px;max-width:900px}
+    h1 em{font-style:normal;color:var(--orange)}
+    .lede{font-size:21px;max-width:760px;margin:0 0 26px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .button{display:inline-block;padding:12px 16px;background:var(--ink);color:white;text-decoration:none;font-weight:850;border:1px solid var(--ink)}
+    .button.secondary{background:transparent;color:var(--ink)}
+    .hero-visual{background:#dce6df;padding:38px;display:grid;place-items:center;overflow:hidden}
+    .exploded{width:min(650px,100%);display:grid;grid-template-rows:auto auto auto;gap:18px;transform:rotate(-3deg)}
+    .exploded .layer{position:relative;background:var(--surface);border:2px solid var(--ink);box-shadow:12px 12px 0 rgba(23,32,28,.12);padding:20px;text-align:center;font-weight:900}
+    .exploded .frame-layer{height:250px;background:transparent;border:0;box-shadow:none}
+    .quad-shape{position:absolute;inset:20px}
+    .arm{position:absolute;left:50%;top:50%;width:78%;height:20px;background:var(--ink);transform-origin:center}
+    .arm.a{transform:translate(-50%,-50%) rotate(42deg)}.arm.b{transform:translate(-50%,-50%) rotate(-42deg)}
+    .motor{position:absolute;width:74px;height:74px;border:12px solid var(--orange);border-radius:50%;background:var(--surface);z-index:2}
+    .motor:after{content:"MOTOR";position:absolute;font-size:9px;inset:0;display:grid;place-items:center}
+    .m1{left:2%;top:2%}.m2{right:2%;top:2%}.m3{left:2%;bottom:2%}.m4{right:2%;bottom:2%}
+    .core{position:absolute;left:50%;top:50%;width:130px;height:110px;transform:translate(-50%,-50%);background:var(--lime);border:4px solid var(--ink);z-index:3;display:grid;place-items:center;text-align:center;font-size:12px}
+    .caption{font-size:12px;color:var(--muted);margin-top:10px}
+    .intro-strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+    .intro-strip div{padding:24px;border-right:1px solid var(--line);background:var(--surface)}
+    .intro-strip strong{display:block;font-size:28px;line-height:1;color:var(--green)}
+    .intro-strip span{font-size:12px;color:var(--muted)}
+    .section{min-width:0;padding:72px 56px;border-bottom:1px solid var(--line)}
+    .section.dark{background:var(--ink);color:white}.section.dark a{color:#b9d4ff}
+    .section-head{max-width:1000px;margin-bottom:38px}
+    .day-label{display:inline-block;font-size:12px;font-weight:900;letter-spacing:.13em;color:var(--green);text-transform:uppercase;margin-bottom:12px}
+    .dark .day-label{color:var(--lime)}
+    h2{font-size:clamp(38px,5vw,74px);line-height:.96;letter-spacing:-.045em;margin:0 0 18px}
+    h3{font-size:26px;line-height:1.15;margin:30px 0 12px}
+    h4{font-size:17px;margin:20px 0 8px}
+    p{max-width:900px}
+    .plain{font-size:20px;padding:22px 24px;background:var(--surface);border-left:7px solid var(--green);box-shadow:var(--shadow)}
+    .dark .plain{background:#26332d;border-color:var(--lime)}
+    .warn{padding:20px 22px;background:#fff1d4;border-left:7px solid var(--amber);margin:24px 0;color:var(--ink)}
+    .danger{padding:20px 22px;background:#f8e1dc;border-left:7px solid var(--red);margin:24px 0;color:var(--ink)}
+    .success{padding:20px 22px;background:var(--verified);border-left:7px solid var(--green);margin:24px 0;color:var(--ink)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+    .card{background:var(--surface);border:1px solid var(--line);padding:22px;min-width:0;color:var(--ink)}
+    .card h3{font-size:22px;margin:0 0 10px}.card h4{margin-top:0}
+    .card p:last-child{margin-bottom:0}
+    .card .icon{font-size:34px;line-height:1;margin-bottom:14px;display:block}
+    .pros,.cons{padding-left:20px}.pros li::marker{color:var(--green)}.cons li::marker{color:var(--red)}
+    .table-wrap{width:100%;max-width:100%;min-width:0;overflow:auto;border:1px solid var(--line);background:var(--surface);margin:22px 0}
+    table{width:100%;border-collapse:collapse;min-width:900px;color:var(--ink)}
+    th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+    th{background:var(--ink);color:white;font-size:12px;letter-spacing:.045em;text-transform:uppercase}
+    tbody tr:hover{background:#f6f7ef}
+    .tag{display:inline-block;padding:3px 7px;margin:2px 4px 2px 0;border:1px solid currentColor;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}
+    .tag.verified{background:var(--verified);color:var(--green)}.tag.planning{background:var(--planning);color:var(--amber)}
+    .tag.example{background:var(--example);color:var(--blue)}.tag.rfq{background:var(--rfq);color:var(--red)}
+    .diagram{background:var(--surface);border:1px solid var(--line);padding:24px;margin:28px 0;color:var(--ink)}
+    .diagram-title{font-weight:900;margin-bottom:18px}.diagram-note{font-size:12px;color:var(--muted);margin-top:14px}
+    .flow{display:flex;gap:8px;align-items:stretch;overflow:auto;padding-bottom:5px}
+    .flow .box{min-width:145px;flex:1;padding:16px;border:2px solid var(--ink);background:white;text-align:center;display:grid;place-items:center;font-weight:850}
+    .flow .arrow{display:grid;place-items:center;font-size:26px;color:var(--orange);font-weight:900}
+    .axis-diagram{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+    .quad-top{height:360px;position:relative;background:#edf1ea;border:1px solid var(--line)}
+    .quad-top .arm{width:70%;height:18px}.quad-top .motor{width:64px;height:64px;border-width:10px}.quad-top .core{width:120px;height:100px}
+    .axis{position:absolute;left:50%;top:50%;z-index:5;transform-origin:left center;height:4px;background:var(--blue)}
+    .axis:after{content:"";position:absolute;right:-1px;top:-6px;border-left:12px solid var(--blue);border-top:7px solid transparent;border-bottom:7px solid transparent}
+    .axis.roll{width:40%;transform:translate(0,-50%)}.axis.pitch{width:35%;transform:translate(0,-50%) rotate(-90deg)}
+    .axis-label{position:absolute;font-size:11px;font-weight:900;color:var(--blue);z-index:6}.roll-label{right:5%;top:47%}.pitch-label{left:52%;top:5%}
+    .concept-list{display:grid;gap:9px}.concept{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--line);padding:10px 0}.concept strong{color:var(--green)}
+    .geometry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .geometry{background:var(--surface);border:1px solid var(--line);padding:20px;text-align:center}
+    .geometry-shape{height:220px;position:relative;margin-bottom:14px;background:#edf1ea;overflow:hidden}
+    .geometry-shape .arm{width:64%;height:12px}.geometry-shape .motor{width:46px;height:46px;border-width:7px}.geometry-shape .core{width:80px;height:68px;font-size:9px}
+    .geometry-shape.deadcat .arm.a{transform:translate(-50%,-50%) rotate(34deg)}.geometry-shape.deadcat .arm.b{transform:translate(-50%,-50%) rotate(-34deg)}
+    .geometry-shape.tube .arm{height:16px;border-radius:12px;background:#48524d}.geometry-shape.tube .core{width:104px;height:104px}
+    .formula{font:700 18px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;background:#e9eee8;border:1px solid var(--line);padding:16px;overflow:auto;color:var(--ink)}
+    .worksheet{background:#fffdf7;border:2px solid var(--ink);padding:24px;margin:26px 0;color:var(--ink)}
+    .worksheet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    label{display:block;font-size:12px;font-weight:850;color:var(--muted)}
+    input[type=number]{width:100%;padding:10px;border:1px solid var(--line);background:white;margin-top:5px}
+    output{display:block;font-size:28px;font-weight:900;color:var(--green);margin-top:6px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .checklist{list-style:none;padding:0;margin:20px 0}.checklist li{padding:11px 12px 11px 42px;border-bottom:1px solid var(--line);position:relative;background:var(--surface);color:var(--ink)}
+    .checklist li:before{content:"□";position:absolute;left:14px;top:7px;font-size:22px;color:var(--green)}
+    .source-ref{font-size:11px;font-weight:850;overflow-wrap:anywhere}
+    .page-footer{padding:40px 56px;background:#0c120f;color:white}
+    @media(max-width:1000px){.hero{grid-template-columns:1fr}.hero-visual{min-height:580px}.cards,.geometry-grid{grid-template-columns:1fr 1fr}.axis-diagram,.two-col{grid-template-columns:1fr}.intro-strip{grid-template-columns:1fr 1fr}.worksheet-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:680px){.topbar-inner{padding:8px 12px}.brand{display:none}.hero-copy,.section{padding:48px 20px}.hero-visual{padding:18px;min-height:500px}.cards,.geometry-grid,.worksheet-grid{grid-template-columns:1fr}.intro-strip{grid-template-columns:1fr}.intro-strip div{border-right:0;border-bottom:1px solid var(--line)}.flow{flex-direction:column}.flow .arrow{transform:rotate(90deg)}.concept{grid-template-columns:1fr}.quad-top{height:300px}.page-footer{padding:34px 20px}}
+    @media print{.topbar{display:none}.section,.hero{break-inside:avoid}.hero{min-height:auto}.button{display:none}body{background:white}.card,.diagram,.worksheet{box-shadow:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to course</a>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">DRONE COURSE</div>
+      <nav aria-label="Course days">
+        <a href="#start">START</a><a href="#day1">DAY 1</a><a href="#day2">DAY 2</a><a href="#day3">DAY 3</a>
+        <a href="#day4">DAY 4</a><a href="#day5">DAY 5</a><a href="#day6">DAY 6</a><a href="#day7">DAY 7</a>
+        <a href="#decision">DECISION</a><a href="#glossary">GLOSSARY</a><a href="#sources">SOURCES</a>
+      </nav>
+    </div>
+  </div>
+
+  <main id="content">
+    <header class="hero" id="start">
+      <div class="hero-copy">
+        <div class="eyebrow">Research edition · 11 August 2026 · Learn first, buy later</div>
+        <h1>From first principles to a <em>manufacturable frame.</em></h1>
+        <p class="lede">A seven-day beginner course for understanding a civilian multirotor as an aircraft, an electrical system, a controlled machine and—eventually—a repeatable product made in Georgia.</p>
+        <div class="hero-actions">
+          <a class="button" href="#day1">Begin Day 1</a>
+          <a class="button secondary" href="drone-guide.html">Open the 18-photo parts atlas</a>
+        </div>
+        <p class="caption">No purchase is authorized. The existing four-inch USD 230 build remains a dated, provisional candidate—not a frozen product.</p>
+      </div>
+      <div class="hero-visual" role="img" aria-label="Exploded teaching illustration of a quadcopter showing payload, controller and frame layers">
+        <div class="exploded">
+          <div class="layer">CAMERA + RADIO LINKS<br><small>What the aircraft senses and communicates</small></div>
+          <div class="layer">FLIGHT CONTROLLER + POWER SYSTEM<br><small>What decides and distributes electrical power</small></div>
+          <div class="layer frame-layer">
+            <div class="quad-shape">
+              <div class="arm a"></div><div class="arm b"></div>
+              <div class="motor m1"></div><div class="motor m2"></div><div class="motor m3"></div><div class="motor m4"></div>
+              <div class="core">FRAME<br>loads + interfaces</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="intro-strip" aria-label="Course boundaries">
+      <div><strong>7 days</strong><span>one connected engineering story</span></div>
+      <div><strong>3 platforms</strong><span>4-inch, 5-inch and X500-style</span></div>
+      <div><strong>5 scales</strong><span>1, 10, 100, 1,000 and 5,000 units</span></div>
+      <div><strong>0 claims</strong><span>of weight, range or endurance without measurement</span></div>
+    </div>
+
+    <section class="section" aria-labelledby="how-title">
+      <div class="section-head">
+        <span class="day-label">How to use this course</span>
+        <h2 id="how-title">Understanding before procurement.</h2>
+        <p class="plain"><strong>Plain-language rule:</strong> every choice must answer two questions: “What job does this part perform?” and “What other parts constrain it?” A cheap part that breaks compatibility is expensive.</p>
+      </div>
+      <div class="cards">
+        <article class="card"><span class="icon">①</span><h3>Learn</h3><p>Read the day, redraw its main diagram from memory and define every new term in your own words.</p></article>
+        <article class="card"><span class="icon">②</span><h3>Calculate</h3><p>Use the worksheets. Keep assumptions visible. An estimate is a question for a test—not a performance claim.</p></article>
+        <article class="card"><span class="icon">③</span><h3>Gate</h3><p>Do the end-of-day check. If you cannot explain the compatibility chain, stop before selecting or buying parts.</p></article>
+      </div>
+      <div class="warn"><strong>Three different objects:</strong> a <em>learning aircraft</em> teaches subsystems; an <em>engineering prototype</em> tests requirements; a <em>sellable product</em> also needs stable suppliers, controlled production, documented acceptance tests, regulatory fit, support and a customer willing to pay.</div>
+    </section>
+
+    <section class="section dark" id="day7" aria-labelledby="day7-title">
+      <div class="section-head">
+        <span class="day-label">Day 7 · Manufacturing economics and scale</span>
+        <h2 id="day7-title">A retail BOM is not a factory cost.</h2>
+        <p class="plain">Unit economics must include every resource consumed to deliver a conforming product: purchased parts, converted material, labour, machine time, scrap, inspection, packaging, freight, warranty, support and cash tied up while inventory moves.</p>
+      </div>
+
+      <h3>Cost language</h3>
+      <div class="cards">
+        <article class="card"><span class="tag verified">Verified current price</span><h3>Observed listing</h3><p>A dated public price for an exact item/variant. It is not a supplier quote, landed cost or proof of volume availability.</p></article>
+        <article class="card"><span class="tag planning">Planning assumption</span><h3>Budget placeholder</h3><p>A reasonable allowance used to avoid hiding cost. Replace it with evidence before commitment.</p></article>
+        <article class="card"><span class="tag example">Illustrative example</span><h3>Teaching number</h3><p>Shows a method or sensitivity. It is not a prediction or offer.</p></article>
+        <article class="card"><span class="tag rfq">RFQ required</span><h3>Unknown at scale</h3><p>Requires a formal request for quotation and supplier qualification.</p></article>
+        <article class="card"><span class="tag verified">Supplier quotation</span><h3>Missing today</h3><p>A dated commercial response with quantity, terms, validity, lead time and specification. No production quote has yet been obtained.</p></article>
+      </div>
+
+      <h3>Current cost anchors — researched 11 August 2026</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Item / scenario</th><th>Amount</th><th>Label</th><th>Boundary</th></tr></thead>
+        <tbody>
+          <tr><td>Provisional 4-inch aircraft checkout</td><td><strong>USD 214.57</strong></td><td><span class="tag verified">verified 4 Aug 2026</span></td><td>Nine aircraft lines; excludes freight, tax, ground equipment, tools and spares. Recheck before purchase.</td></tr>
+          <tr><td>Complete initial 4-inch learning system</td><td><strong>USD 590.50–615.50</strong></td><td><span class="tag verified">snapshot + local allowance</span></td><td>Aircraft, radio, monitor, specialist tools and USD 45–70 local PPE/consumables; before freight/tax.</td></tr>
+          <tr><td>Holybro X500 V2 frame / ARF reference</td><td><strong>USD 122.99 / 260.99</strong></td><td><span class="tag verified">official retail</span></td><td>ARF includes frame, motors, ESCs, props and PDB; excludes autopilot, GNSS, battery, radio and payload.</td></tr>
+          <tr><td>Holybro PX4 X500 V2 development kit</td><td><strong>from USD 532.99</strong></td><td><span class="tag verified">official collection</span></td><td>Configuration-dependent; battery, control radio, tools, freight/tax and payload still need checking.</td></tr>
+          <tr><td>Shapeoko-class CNC benchmark</td><td><strong>USD 2,980–5,700</strong></td><td><span class="tag verified">official retail</span></td><td>Machine benchmark only. Carbon-safe enclosure/extraction, tools, workspace, freight and commissioning are additional.</td></tr>
+          <tr><td>HEPA dust-extractor benchmark</td><td><strong>USD 849</strong></td><td><span class="tag verified">official launch price</span></td><td>One component, not proof of a complete composite-dust control system.</td></tr>
+          <tr><td>Enclosed engineering 3D printer allowance</td><td><strong>USD 900–1,100</strong></td><td><span class="tag planning">official page varied</span></td><td>Regional/variant pricing differed on the official page; add hardened parts/drying when the polymer requires them.</td></tr>
+          <tr><td>2 mm quasi-isotropic carbon, 24×24 in benchmark</td><td><strong>USD 462.94</strong></td><td><span class="tag verified">official retail</span></td><td>Premium US retail material; not a Georgian landed cost or volume quote.</td></tr>
+          <tr><td>Five-inch candidate aircraft</td><td><strong>Unknown</strong></td><td><span class="tag rfq">candidate BOM not built</span></td><td>Do not reuse an unrelated internet build as a product cost.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="source-ref"><a href="https://shop.carbide3d.com/collections/cnc-routers">Carbide 3D [S17]</a> · <a href="https://www.festoolusa.com/-/media/tts/fcp/festool-usa/downloads/press-releases/festool_2025_springlaunch_press-release.pdf">Festool [S18]</a> · <a href="https://us.store.bambulab.com/collections/3d-printer/products/p1s">Bambu Lab [S19]</a> · <a href="https://dragonplate.com/quasi-isotropic-carbon-fiber-uni-sheet-2mm-x-24-x-24">DragonPlate [S20]</a></p>
+
+      <h3>Workshop pathways</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Path</th><th>What is internal</th><th>Planning allowance</th><th>What it can prove</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A — learning bench</strong></td><td>Assembly, soldering, firmware, measurement, printed fit models through service bureau or basic printer</td><td><span class="tag planning">USD 600–1,800</span></td><td>Aircraft integration and basic workmanship; not frame process capability</td></tr>
+          <tr><td><strong>B — outsource carbon</strong></td><td>CAD/drawings, printer, jigs, harnessing, assembly, inspection and tests; carbon plates/tubes cut externally</td><td><span class="tag planning">USD 2,000–5,000</span></td><td>Original frame design, supplier control and small-batch assembly without carbon-dust cell</td></tr>
+          <tr><td><strong>C — in-house prototype carbon cell</strong></td><td>Path B plus enclosed CNC cutting, extraction, composite tooling and dedicated cleanup</td><td><span class="tag planning">USD 8,000–16,000</span></td><td>Fast internal plate iterations if the safety/process gates pass; not automatically economical production</td></tr>
+          <tr><td><strong>D — pilot production</strong></td><td>Multiple fixtures, controlled stock, dedicated test stations, calibration, traceability and trained operators</td><td><span class="tag rfq">process + site design required</span></td><td>Repeatability and capacity at a defined revision</td></tr>
+        </tbody>
+      </table></div>
+      <div class="warn"><strong>Why Path C is a range:</strong> the CNC is only one line. Enclosure/air handling, extraction, 3D printer, metrology, composite cutters, workholding, electrical/bench work, PPE, cleanup, commissioning, freight and contingency can equal or exceed the apparent “machine price.” Obtain a local safety and facility design before spending.</div>
+
+      <h3>What changes with quantity</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Scale</th><th>Primary question</th><th>Appropriate evidence</th><th>Typical trap</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 unit</strong></td><td>Can one coherent aircraft be built, configured, flown and repaired?</td><td>As-built record, measurements, faults and test log</td><td>Calling one success “production ready”</td></tr>
+          <tr><td><strong>10 units</strong></td><td>Can the same revision be assembled repeatedly?</td><td>Build-time distribution, first-pass yield, fixture feedback and serial traceability</td><td>Expert hand-fitting hidden as labour</td></tr>
+          <tr><td><strong>100 units</strong></td><td>Can suppliers, inventory, training and quality sustain a pilot batch?</td><td>Supplier quotes, incoming/final yield, warranty plan and cash model</td><td>Ignoring rework, spares, packaging and working capital</td></tr>
+          <tr><td><strong>1,000 units</strong></td><td>Which processes and suppliers need capacity/automation?</td><td>Capacity commitments, process capability, PCN/EOL terms and qualified alternates</td><td>Retail availability presented as supply assurance</td></tr>
+          <tr><td><strong>5,000 units</strong></td><td>Does tooling/internalisation reduce total cost without freezing the wrong design?</td><td>Validated demand, amortised tooling, field failure data and multi-source plan</td><td>Buying moulds/machines before revision and market stabilise</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>The complete unit-cost stack</h3>
+      <div class="diagram"><div class="flow"><div class="box">Raw + purchased parts</div><div class="arrow">+</div><div class="box">Direct labour + machine</div><div class="arrow">+</div><div class="box">Scrap + rework + QC</div><div class="arrow">=</div><div class="box">Factory cost</div><div class="arrow">+</div><div class="box">Freight + tax + customs + pack</div><div class="arrow">=</div><div class="box">Landed cost</div><div class="arrow">+</div><div class="box">Warranty + channel + overhead + profit</div><div class="arrow">=</div><div class="box">Selling price</div></div></div>
+      <p><strong>One-time engineering</strong> and <strong>capital expenditure</strong> do not disappear: either charge them to development financing or amortise them across expected units. <strong>Working capital</strong> is the cash tied up between paying suppliers and receiving customer payment. A profitable-looking unit can still exhaust cash if lead times and minimum orders are large.</p>
+
+      <div class="worksheet" id="unit-cost-calculator">
+        <h3>Worksheet B — transparent frame unit economics</h3>
+        <p>Defaults are illustrative small-batch teaching assumptions in USD. Replace every field with a quote, time study or measured yield.</p>
+        <div class="worksheet-grid">
+          <label>Carbon / structural material per good unit<input id="cost-material" type="number" min="0" step="0.01" value="24"></label>
+          <label>Hardware per unit<input id="cost-hardware" type="number" min="0" step="0.01" value="8"></label>
+          <label>Printed parts per unit<input id="cost-print" type="number" min="0" step="0.01" value="4"></label>
+          <label>Machine minutes per attempted unit<input id="cost-machine-min" type="number" min="0" step="1" value="18"></label>
+          <label>Machine rate per hour<input id="cost-machine-rate" type="number" min="0" step="0.01" value="30"></label>
+          <label>Direct labour minutes<input id="cost-labour-min" type="number" min="0" step="1" value="25"></label>
+          <label>Loaded labour rate per hour<input id="cost-labour-rate" type="number" min="0" step="0.01" value="12"></label>
+          <label>QC + test per unit<input id="cost-qc" type="number" min="0" step="0.01" value="5"></label>
+          <label>Packaging per unit<input id="cost-pack" type="number" min="0" step="0.01" value="3"></label>
+          <label>Scrap / rework allowance (%)<input id="cost-scrap" type="number" min="0" max="90" step="0.1" value="10"></label>
+          <label>Factory overhead per good unit<input id="cost-overhead" type="number" min="0" step="0.01" value="10"></label>
+          <label>Landed additions (%)<input id="cost-landed" type="number" min="0" step="0.1" value="15"></label>
+        </div>
+        <div class="worksheet-grid">
+          <div><label>Illustrative factory cost</label><output id="cost-factory">$74.44</output></div>
+          <div><label>Illustrative landed cost</label><output id="cost-landed-output">$85.61</output></div>
+          <div><label>Evidence status</label><output>Planning only</output></div>
+        </div>
+        <p class="caption">This excludes electronics and complete-aircraft assembly. “Machine rate” must eventually include depreciation, energy, tooling, maintenance, extraction consumables, setup and realistic utilisation.</p>
+      </div>
+
+      <h3>RFQ template — send the same controlled package to every supplier</h3>
+      <div class="card">
+        <h3>Subject: RFQ — [part number / revision] — quantities 100 / 1,000 / 5,000</h3>
+        <p><strong>Package:</strong> controlled drawing/PDF, neutral CAD where required, material/process specification, inspection plan, packaging requirement, forecast and confidentiality terms. State which document wins if there is a conflict.</p>
+        <ol>
+          <li>Quote unit price separately for 100, 1,000 and 5,000 conforming units.</li>
+          <li>State minimum order quantity (MOQ), minimum batch, sample cost and tooling/non-recurring engineering charges.</li>
+          <li>State sample, first-article and production lead times plus monthly capacity and capacity reserved for us.</li>
+          <li>Identify exact material grade/brand, process, manufacturing location and all subcontracted operations.</li>
+          <li>Confirm drawing revision and how revisions are controlled.</li>
+          <li>Describe prior-notification process for component, material, tooling, process or manufacturing-site changes.</li>
+          <li>Provide product-change notification (PCN) and end-of-life (EOL) notice periods.</li>
+          <li>List inspection equipment, sampling, certificates, first-article report and lot traceability supplied.</li>
+          <li>State warranty, defect containment, return-material and corrective-action process.</li>
+          <li>Propose qualified alternates, clearly identifying any difference requiring validation.</li>
+          <li>State Incoterm, origin, packaging, shipping dimensions/weight and export documentation.</li>
+          <li>State payment terms, quote currency, validity, deposit, cancellation and liability for excess inventory.</li>
+        </ol>
+        <p><strong>Required response:</strong> do not accept “same quality” or “equivalent” without identified material/process and evidence. Supplier quotes are commercial evidence only after the specification and terms match.</p>
+      </div>
+
+      <h3>Day 7 gate</h3>
+      <ul class="checklist">
+        <li>I can distinguish factory, landed and selling cost.</li>
+        <li>I can point to one-time engineering, capital equipment, working capital and warranty in the model.</li>
+        <li>I know what evidence is needed at 1, 10, 100, 1,000 and 5,000 units.</li>
+        <li>I will request controlled 100/1,000/5,000-unit quotes before freezing a production BOM.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="decision" aria-labelledby="decision-title">
+      <div class="section-head">
+        <span class="day-label">Platform comparison and provisional decision</span>
+        <h2 id="decision-title">Prototype 1 should teach cheaply without pretending to be the product.</h2>
+        <p class="plain">Recommendation: keep a four-inch analog-FPV quad as Prototype 1’s learning architecture, subject to the knowledge gates and a fresh pre-purchase audit. Run frame-manufacturing development as a parallel, outsource-first track. Do not treat P1 as the eventual commercial camera platform.</p>
+      </div>
+
+      <h3>One comparison matrix</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Criterion</th><th>4-inch analog FPV</th><th>5-inch analog FPV</th><th>X500-style modular platform</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Beginner integration</strong></td><td>Compact and cramped; existing interfaces audited</td><td>More assembly room; higher-energy aircraft</td><td>Physically spacious but many more sensors, harnesses and calibrations</td></tr>
+          <tr><td><strong>Safety</strong></td><td>Lower mass/prop size than alternatives, but exposed props still hazardous</td><td>Larger props and commonly greater mass/energy demand more space</td><td>Much larger mass/props; requires a substantial isolated test area</td></tr>
+          <tr><td><strong>Aircraft cost evidence</strong></td><td>USD 214.57 retail snapshot; provisional</td><td>Unknown until a controlled candidate BOM is built</td><td>USD 260.99 ARF excludes autopilot/GNSS/battery/radio; development kit from USD 532.99</td></tr>
+          <tr><td><strong>Complete start cost</strong></td><td>USD 590.50–615.50 before freight/tax snapshot</td><td>Unknown; radio/monitor/tools may transfer but aircraft, batteries and spares differ</td><td>Unknown complete configuration; clearly above the USD 230 aircraft cap</td></tr>
+          <tr><td><strong>Weight</strong></td><td>Path below 300 g and possibly toward 250 g must be measured, not assumed</td><td>Likely heavier for comparable robust build; no candidate measurement</td><td>Holybro publishes 610 g frame alone; original complete aircraft unknown</td></tr>
+          <tr><td><strong>Packaging space</strong></td><td>Tight; strong integration lesson</td><td>Best FPV packaging room</td><td>Ample rails/decks and accessible wiring</td></tr>
+          <tr><td><strong>Component availability</strong></td><td>Candidate uses specialised small motors/T-mount props; scale unproved</td><td>Broad hobby ecosystem is plausible but must be proven by RFQ</td><td>Standard larger motors/props and autopilot ecosystem; production alternates unproved</td></tr>
+          <tr><td><strong>Repairability</strong></td><td>Replaceable arms and commodity subsystems; pod packaging can slow access</td><td>Replaceable-arm frames common and easier to access</td><td>Modular tubes/connectors/rails; more parts and calibration after repair</td></tr>
+          <tr><td><strong>Frame manufacturing</strong></td><td>Flat carbon arms/plates plus printed pod; small features and thin plates</td><td>Flat carbon plates/arms; more forgiving packaging and common process benchmark</td><td>Plates, cut tubes, motor mounts, rails and printed/moulded connectors; deeper but harder</td></tr>
+          <tr><td><strong>Tooling</strong></td><td>2D plate routing, printed parts, small assembly fixtures</td><td>Similar plate tooling with larger envelope</td><td>Plate/tube cutting, drilling/alignment fixtures and connector process</td></tr>
+          <tr><td><strong>Transferable knowledge</strong></td><td>Excellent electronics integration, soldering, firmware, repair and compact DFM</td><td>Excellent robust frame/repair ecosystem and propulsion sizing</td><td>Best payload, harness, GNSS/autopilot, structural and production-system learning</td></tr>
+          <tr><td><strong>Payload / sensors</strong></td><td>Very limited</td><td>Limited to moderate depending design</td><td>Purpose-built for payload rails and development sensors</td></tr>
+          <tr><td><strong>Civilian use validation</strong></td><td>Learning, FPV and basic live camera only</td><td>Learning, FPV and modest camera experiments</td><td>Closer to inspection/research workflows, but mission and customer still unvalidated</td></tr>
+          <tr><td><strong>Production scalability</strong></td><td>Simple mechanical kit; electronics supply is the uncertainty</td><td>Simple plate frame; candidate supply still unknown</td><td>More part families, assembly time and test burden; more product differentiation potential</td></tr>
+          <tr><td><strong>Path to original Georgian product</strong></td><td>Fastest low-cost learning; weak proof of inspection value</td><td>Good original rugged FPV/frame product path if demand exists</td><td>Best long-term architectural reference if customers require payload/autonomy</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Why four-inch wins P1—for now</h3>
+      <div class="two-col">
+        <div class="card"><h3>It teaches</h3><ul><li>Complete multirotor compatibility at the lowest currently audited aircraft checkout</li><li>Soldering, power distribution, Betaflight, ExpressLRS and analog video</li><li>Mass/energy measurement, repair, logs and configuration control</li><li>Open plate/printed-frame references and tight design-for-assembly lessons</li></ul></div>
+        <div class="card"><h3>It does not prove</h3><ul><li>A commercially useful inspection or mapping product</li><li>Sub-250 g status, endurance, range or reliability</li><li>Georgian RF legality for the proposed settings</li><li>Thousand-unit component supply or factory cost</li><li>Demand for a Georgian FPV frame or aircraft</li></ul></div>
+      </div>
+
+      <h3>Provisional architecture—not a purchase order</h3>
+      <div class="diagram"><div class="flow"><div class="box">Open replaceable-arm 4-inch frame</div><div class="arrow">+</div><div class="box">4S-tested small propulsion</div><div class="arrow">+</div><div class="box">FC + 4-in-1 ESC</div><div class="arrow">+</div><div class="box">2.4 GHz control receiver</div><div class="arrow">+</div><div class="box">low-power analog camera/VTX</div><div class="arrow">+</div><div class="box">measured battery + retention</div></div></div>
+      <p>The dated candidate remains the Source PodRacer 4-inch / JHEMCU GHF745AIO / EX1404 2750 KV / analog camera and VTX / EP2 ELRS / 4S battery architecture documented in the <a href="drone-guide.html">photo buying guide</a>. No order should be placed until variants, shipping, regulation and the compatibility/weight model are refreshed.</p>
+
+      <h3>Measurements required before BOM freeze</h3>
+      <ul class="checklist">
+        <li>As-built mass and centre of gravity with exact battery, straps and props.</li>
+        <li>Propeller/frame/wire clearance under assembly tolerance and blade flex.</li>
+        <li>Static propulsion current/thrust on the exact chosen prop, plus motor/ESC temperature.</li>
+        <li>Hover and representative-flight current, usable flight time with reserve and battery sag.</li>
+        <li>FC vibration logs, handling, failsafe and video/control behaviour.</li>
+        <li>Crash/repair record, fastener retention and actual assembly/rework time.</li>
+        <li>Georgian GCAA operating requirements and written ComCom RF interpretation.</li>
+        <li>100/1,000/5,000-unit quotes, revision/PCN/EOL terms and alternates for critical parts.</li>
+      </ul>
+
+      <h3>Exact switch conditions</h3>
+      <div class="cards">
+        <article class="card"><h3>Switch to 5-inch P1</h3><p>Only if the sub-300 g/compact target is relaxed, safe test space is secured, a complete candidate remains inside the authorised budget, and its propulsion/electronics receive materially better verified supply, fit or repair evidence than the four-inch candidate.</p></article>
+        <article class="card"><h3>Switch to X500-style P1</h3><p>Only if the purpose changes from cheap subsystem learning to validating a real customer need for stable payload, GNSS/autonomy or modular sensors—and the user explicitly accepts the much higher aircraft, ground, test-space and safety budget.</p></article>
+        <article class="card"><h3>Stop all aircraft procurement</h3><p>If Georgian flight/RF conditions cannot be satisfied for the intended test, safe facilities are unavailable, shipping a suitable LiPo is blocked, or the knowledge gates reveal an unresolved interface.</p></article>
+      </div>
+    </section>
+
+    <section class="section dark" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="section-head">
+        <span class="day-label">Twelve-month path</span>
+        <h2 id="roadmap-title">Manufacture knowledge first; then parts; then repeatability.</h2>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Month</th><th>Aircraft track</th><th>Frame/manufacturing track</th><th>Exit evidence</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td>Complete course, simulator practice and terminology exercises</td><td>Learn CAD basics; measure reference interfaces</td><td>Can explain every subsystem and redraw compatibility chain</td></tr>
+          <tr><td><strong>2</strong></td><td>Soldering coupons, connector practice and props-off FC configuration on safe bench hardware if authorised</td><td>Print fit models, gauges and non-flight fixtures via service or printer</td><td>Accepted solder samples and measurement records</td></tr>
+          <tr><td><strong>3</strong></td><td>Refresh P1 BOM/regulation/shipping; purchase only after explicit decision</td><td>Write original frame requirements from intended mission and repair cases</td><td>Controlled P1 provisional BOM and Frame Requirements v0.1</td></tr>
+          <tr><td><strong>4</strong></td><td>Build and commission retail-component P1 through G0–G9</td><td>Create 2–3 frame concepts; design fixtures/coupons</td><td>As-built/test log and concept review</td></tr>
+          <tr><td><strong>5</strong></td><td>Collect flight, thermal, vibration and repair data</td><td>Send controlled drawings to at least two carbon suppliers; order outsourced samples</td><td>Measured load/interface assumptions and supplier feedback</td></tr>
+          <tr><td><strong>6</strong></td><td>Correct P1 integration defects</td><td>Inspect samples; coupon/arm/fastener tests; revise CAD</td><td>Frame Alpha revision and test report</td></tr>
+          <tr><td><strong>7</strong></td><td>Fly original Alpha only after ground/structural gates</td><td>Build assembly/harness nests and first-article template</td><td>Controlled flight and post-test inspection</td></tr>
+          <tr><td><strong>8</strong></td><td>Build five same-revision engineering units</td><td>Track yield, build time, rework, fixture defects and serialized records</td><td>Five units pass one acceptance process</td></tr>
+          <tr><td><strong>9</strong></td><td>Field learning with legal civilian use-case partners—no unsupported sales claim</td><td>100/1,000/5,000 RFQs for frame and critical purchased components</td><td>Customer evidence plus comparable supplier responses</td></tr>
+          <tr><td><strong>10</strong></td><td>Choose product direction: compact FPV/frame kit or larger modular platform</td><td>Design revision based on failures and user evidence; prepare 10-unit batch</td><td>Requirements/architecture decision and risk register</td></tr>
+          <tr><td><strong>11</strong></td><td>Run 10-unit engineering batch and acceptance testing</td><td>Complete factory/landed cost, working-capital and warranty model</td><td>First-pass yield, field issues and honest unit economics</td></tr>
+          <tr><td><strong>12</strong></td><td>Approve, revise or stop pilot-batch plan</td><td>Compare external carbon cost/lead time with complete internal-cell business case</td><td>Explicit outsource vs in-house decision; no CNC purchase without all gates</td></tr>
+        </tbody>
+      </table></div>
+      <div class="success"><strong>Realistic year-one internal manufacturing:</strong> CAD/drawings, printed mounts and fixtures, harnesses, final assembly, firmware provisioning, inspection, test, traceability and packaging. Carbon plates can be called “our manufactured frame” only when the company controls the design/specification and production evidence; cutting may still be responsibly outsourced. Bringing carbon cutting inside is optional, not the definition of being a manufacturer.</div>
+    </section>
+
+    <section class="section" id="glossary" aria-labelledby="glossary-title">
+      <div class="section-head"><span class="day-label">Glossary</span><h2 id="glossary-title">Words you should be able to explain.</h2></div>
+      <div class="cards">
+        <article class="card"><h4>Aircraft / UAS / drone</h4><p>The flying vehicle; an unmanned aircraft system (UAS) includes the aircraft and equipment needed to operate it.</p><h4>FPV</h4><p>First-person view: live onboard video used by the pilot.</p><h4>VLOS</h4><p>Visual line of sight: the remote pilot or allowed observer maintains direct visual awareness as rules require.</p></article>
+        <article class="card"><h4>FC</h4><p>Flight controller: computer that estimates motion and commands motors.</p><h4>ESC</h4><p>Electronic speed controller: switches battery power into motor phases.</p><h4>VTX / RX / TX</h4><p>Video transmitter; receiver; transmitter. Context matters because “TX/RX” also label serial data pins.</p></article>
+        <article class="card"><h4>LiPo / S / mAh / Wh</h4><p>Lithium-polymer battery; series-cell count; milliamp-hours of charge; watt-hours of energy.</p><h4>KV</h4><p>Approximate motor no-load speed constant in rpm per volt.</p><h4>BEC / regulator</h4><p>Circuit that converts battery voltage to a lower controlled voltage such as 5 V.</p></article>
+        <article class="card"><h4>CoG / MTOM</h4><p>Centre of gravity; maximum take-off mass including payload.</p><h4>GNSS / GPS</h4><p>Global navigation satellite system; GPS is one satellite constellation/system.</p><h4>Telemetry / OSD</h4><p>Measurements sent over a link; on-screen display overlays data on video.</p></article>
+        <article class="card"><h4>CAD / CAM</h4><p>Computer-aided design; computer-aided manufacturing/toolpath preparation.</p><h4>DFM / DFA</h4><p>Design for manufacture; design for assembly.</p><h4>Datum / tolerance</h4><p>Declared measurement reference; allowed variation from nominal.</p></article>
+        <article class="card"><h4>BOM / revision</h4><p>Bill of materials; controlled version of a design/document.</p><h4>RFQ / MOQ</h4><p>Request for quotation; minimum order quantity.</p><h4>PCN / EOL</h4><p>Product change notification; end of life.</p></article>
+        <article class="card"><h4>First article</h4><p>First part from a new design/revision/process inspected against all requirements before a batch proceeds.</p><h4>Non-conformance</h4><p>A requirement was not met; affected material is controlled until an authorised disposition.</p><h4>Yield</h4><p>Fraction of attempted units that pass, often measured as first-pass and final yield.</p></article>
+        <article class="card"><h4>CNC / DXF / STEP / STL</h4><p>Computer numerical control; common 2D profile exchange; neutral 3D exchange; triangulated print mesh.</p><h4>CFRP</h4><p>Carbon-fibre-reinforced polymer.</p><h4>TPU</h4><p>Flexible thermoplastic polyurethane used for protective printed parts.</p></article>
+        <article class="card"><h4>Factory / landed / selling cost</h4><p>Cost to produce; cost after inbound logistics/duties; customer price after commercial costs and margin.</p><h4>CAPEX / working capital</h4><p>Long-lived equipment/facility spending; cash tied up in operating the inventory/receivables cycle.</p></article>
+      </div>
+    </section>
+
+    <section class="section dark" id="sources" aria-labelledby="sources-title">
+      <div class="section-head"><span class="day-label">Primary evidence</span><h2 id="sources-title">Sources and evidence boundaries.</h2><p>Research checked 11 August 2026 unless a dated snapshot is stated. Live prices, regulations, RF classifications, product revisions and availability must be rechecked before purchase, flight or production commitment.</p></div>
+      <div class="cards">
+        <article class="card"><h3>Georgia and radio</h3><ol><li><a href="https://uas.gov.ge/EN">[S1] GCAA UAS portal</a> — Open-category and class overview.</li><li><a href="https://matsne.gov.ge/en/document/view/33298">[S13] Air Code of Georgia</a> — statutory UAS basis.</li><li><a href="https://comcom.ge/ge/legal-acts/resolutions/radiosixshiruli-speqtris-ganawilebis-erovnuli-gegmis-damtkicebis-shesaxeb-saqartvelos-komunikaciebis-erovnuli-komisiis-2006-wlis-30-ivnisis-6-dadgenilebashi-cvlilebebis-shetanis-shesaxeb-8644.page">[S12] ComCom national spectrum plan</a> — allocations, not a complete airborne-device approval.</li></ol></article>
+        <article class="card"><h3>Flight and firmware</h3><ol><li><a href="https://ardupilot.org/copter/docs/what-is-a-multicopter-and-how-does-it-work.html">[S2] ArduPilot multicopter operation</a>.</li><li><a href="https://ardupilot.org/copter/docs/choosing-a-frame.html">[S3] ArduPilot frame/use selection</a>.</li><li><a href="https://docs.px4.io/main/en/assembly/mount_and_orient_controller.html">[S4] PX4 FC mounting/CoG/vibration</a>.</li><li><a href="https://betaflight.com/docs/wiki/getting-started/setup-guide">[S5] Betaflight setup and safety</a>.</li><li><a href="https://ardupilot.org/copter/index.html">[S6] ArduPilot Copter</a>.</li><li><a href="https://docs.px4.io/main/en/config_mc/">[S7] PX4 multicopter configuration</a>.</li></ol></article>
+        <article class="card"><h3>Propulsion and links</h3><ol><li><a href="https://www.happymodel.cn/index.php/2021/01/07/happymodel-ex1404-kv2750-kv3500-kv4800-brushless-motor/">[S8] Happymodel EX1404 motor/test data</a>.</li><li><a href="https://www.expresslrs.org/quick-start/firmware-options/">[S9] ExpressLRS official firmware options</a>.</li><li><a href="https://holybro.com/products/x500-v2-kits">[S10] Holybro X500 V2 specification/price</a>.</li></ol></article>
+        <article class="card"><h3>Reference and licensing</h3><ol><li><a href="https://github.com/ps915/source_podracer">[S11] Source PodRacer repository, GPLv3 and naming rules</a>.</li><li><a href="https://docs.holybro.com/drone-development-kit/px4-development-kit-x500v2/download">[S10b] Holybro X500 V2 downloads</a> — files exist; commercial rights not established.</li></ol></article>
+        <article class="card"><h3>Safety and composites</h3><ol><li><a href="https://www.faa.gov/hazmat/packsafe/lithium-batteries">[S14] FAA lithium batteries</a>.</li><li><a href="https://www.cpsc.gov/Regulations-Laws--Standards/Voluntary-Standards/Batteries-Fire-High-Energy-Density">[S15] CPSC high-energy battery fire standards overview</a>.</li><li><a href="https://cfpcomposites.com/data/CFP%20Composites%20MSDS%20ROCCS%20360%20v4.pdf">[S16] CFP Composites safety data</a>.</li><li><a href="https://cfpcomposites.com/data/360%20End%20User%20Instruction%20Guide%20July%202020%20Revision%20B.pdf">[S16b] CFP machining guidance</a>.</li></ol></article>
+        <article class="card"><h3>Cost benchmarks</h3><ol><li><a href="https://shop.carbide3d.com/collections/cnc-routers">[S17] Carbide 3D CNC prices</a>.</li><li><a href="https://www.festoolusa.com/-/media/tts/fcp/festool-usa/downloads/press-releases/festool_2025_springlaunch_press-release.pdf">[S18] Festool CT 26 HEPA benchmark</a>.</li><li><a href="https://us.store.bambulab.com/collections/3d-printer/products/p1s">[S19] Bambu Lab P1S official page</a>.</li><li><a href="https://dragonplate.com/quasi-isotropic-carbon-fiber-uni-sheet-2mm-x-24-x-24">[S20] DragonPlate material benchmark</a>.</li></ol></article>
+      </div>
+      <div class="warn"><strong>Known evidence gaps:</strong> no Georgian customer demand study, no written ComCom interpretation for the exact airborne radio systems, no 100/1,000/5,000-unit supplier quotes, no original-frame load requirements, no candidate five-inch BOM, and no measured performance from an assembled aircraft. These are the next evidence-producing tasks—not facts to infer.</div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <strong>Drone Engineering to Manufacturing · beginner course · local civilian research artifact</strong><br>
+    Existing photo atlas: <a href="drone-guide.html">drone-guide.html</a> · Course research date: 11 August 2026 · No purchase, publication or production freeze authorised.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const byId = id => document.getElementById(id);
+      const num = id => Number(byId(id).value);
+      const finite = value => Number.isFinite(value) ? value : 0;
+
+      const courseMain = document.querySelector('main');
+      ['day1','day2','day3','day4','day5','day6','day7','decision','roadmap','glossary','sources']
+        .forEach(id => courseMain.append(byId(id)));
+      if (location.hash) {
+        requestAnimationFrame(() => byId(location.hash.slice(1))?.scrollIntoView());
+      }
+
+      function propulsion(){
+        const mass = Math.max(1, num('calc-mass'));
+        const ratio = finite(num('calc-thrust') * num('calc-motors') / mass);
+        const current = Math.max(.01, num('calc-current'));
+        const minutes = finite((num('calc-capacity') / 1000) * (num('calc-usable') / 100) / current * 60);
+        byId('calc-ratio').textContent = ratio.toFixed(2) + ' : 1';
+        byId('calc-time').textContent = minutes.toFixed(1) + ' min';
+        byId('calc-status').textContent = 'Illustrative only';
+      }
+
+      function unitCost(){
+        const direct = num('cost-material') + num('cost-hardware') + num('cost-print') +
+          num('cost-machine-min') / 60 * num('cost-machine-rate') +
+          num('cost-labour-min') / 60 * num('cost-labour-rate') + num('cost-qc') + num('cost-pack');
+        const yieldFactor = 1 / Math.max(.1, 1 - num('cost-scrap') / 100);
+        const factory = finite(direct * yieldFactor + num('cost-overhead'));
+        const landed = finite(factory * (1 + num('cost-landed') / 100));
+        byId('cost-factory').textContent = '$' + factory.toFixed(2);
+        byId('cost-landed-output').textContent = '$' + landed.toFixed(2);
+      }
+
+      document.querySelectorAll('#propulsion-calculator input').forEach(input => input.addEventListener('input', propulsion));
+      document.querySelectorAll('#unit-cost-calculator input').forEach(input => input.addEventListener('input', unitCost));
+      propulsion(); unitCost();
+    });
+  </script>
+
+    <section class="section dark" id="day5" aria-labelledby="day5-title">
+      <div class="section-head">
+        <span class="day-label">Day 5 · Assembly, commissioning and safe test</span>
+        <h2 id="day5-title">Build evidence in the same order you build the aircraft.</h2>
+        <p class="plain">Every step should reduce uncertainty without exposing the aircraft, operator or bystanders to the next hazard too early. Mechanical fit comes before soldering; electrical checks come before power; props-off control checks come before a restrained first hover.</p>
+      </div>
+
+      <h3>Tools are part of the process</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Tool / control</th><th>Why it exists</th><th>Evidence it creates</th></tr></thead>
+        <tbody>
+          <tr><td>Digital multimeter</td><td>Continuity, polarity and voltage checks</td><td>Recorded resistance/continuity and rail voltage before peripherals</td></tr>
+          <tr><td>Temperature-controlled soldering iron, correct tips, solder and flux</td><td>Repeatable wetting without prolonged board heating</td><td>Joint inspection and practice-coupon result</td></tr>
+          <tr><td>Current limiter / smoke stopper</td><td>Limits energy on first battery power</td><td>Pass without trip; it does not replace continuity inspection</td></tr>
+          <tr><td>Magnification and strong lighting</td><td>Find solder bridges, whiskers, damaged insulation and loose strands</td><td>Photographed joints and visual acceptance</td></tr>
+          <tr><td>Drivers, torque method and threadlocker</td><td>Install correct fasteners consistently</td><td>Fastener witness/torque record appropriate to design</td></tr>
+          <tr><td>Scale and callipers</td><td>Measure mass and fit instead of claiming them</td><td>As-built mass and critical dimensions</td></tr>
+          <tr><td>Safety glasses, fume capture and noncombustible surface</td><td>Control eye, solder-fume and battery-fire exposure</td><td>Workstation checklist before energising</td></tr>
+          <tr><td>LiPo balance charger and fire plan</td><td>Controlled cell charging and response to abnormal heating</td><td>Charge log, cell voltages and pack inspection</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Reliable soldered wiring</h3>
+      <div class="cards">
+        <article class="card"><h3>Wire gauge</h3><p>Choose conductor cross-section for expected current, length, allowable voltage drop, flexibility and connector capacity. Signal wire and battery wire solve different problems.</p></article>
+        <article class="card"><h3>Strain relief</h3><p>The solder joint should carry electricity, not repeated cable bending or impact loads. Support the cable and leave a service loop without allowing prop contact.</p></article>
+        <article class="card"><h3>Insulation</h3><p>Heat-shrink, spacing and abrasion protection prevent conductive contact. Carbon fibre is electrically conductive; do not let bare pads or wires rub the frame.</p></article>
+        <article class="card"><h3>Connectors</h3><p>Match type, current, polarity and mating cycles. A hidden adapter is still a required part and a potential failure point.</p></article>
+        <article class="card"><h3>Fasteners</h3><p>Correct diameter, pitch, length, head and material matter. Motor screws that are too long can contact windings. Threadlocker must be compatible with nearby plastic.</p></article>
+        <article class="card"><h3>Routing</h3><p>Separate sensitive antennas/sensors from high-current switching paths, retain access for repair and keep every cable outside propeller discs.</p></article>
+      </div>
+
+      <h3>The staged build</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Gate</th><th>Action</th><th>Pass evidence</th><th>Stop if</th></tr></thead>
+        <tbody>
+          <tr><td><strong>G0 — documentation</strong></td><td>Freeze a provisional drawing/BOM revision, manuals, pinouts, firmware targets and test plan</td><td>Every interface has a source and owner</td><td>Unknown voltage, connector, mount, protocol or regulatory assumption</td></tr>
+          <tr><td><strong>G1 — inventory</strong></td><td>Photograph labels, weigh items, inspect damage and verify exact variants</td><td>As-received record matches provisional BOM</td><td>Wrong KV, cell count, connector, prop mount, board or damaged LiPo</td></tr>
+          <tr><td><strong>G2 — dry fit</strong></td><td>Assemble frame, stack, camera, antennas, battery and straps without cutting wires</td><td>Clearance, CoG range, access and fastener length recorded</td><td>Prop interference, crushed wire, inaccessible USB, poor retention or unacceptable balance</td></tr>
+          <tr><td><strong>G3 — solder practice</strong></td><td>Complete practice joints on scrap of similar thermal mass</td><td>Bright/complete wetting, mechanical pull check and no bridge</td><td>Lifted pads, burned insulation, dull/incomplete joint or uncontrolled fumes</td></tr>
+          <tr><td><strong>G4 — power harness</strong></td><td>Solder main lead and capacitor with battery disconnected</td><td>Polarity and no-short record; magnified inspection</td><td>Continuity between positive and negative indicating a hard short, reversed capacitor or damaged pads</td></tr>
+          <tr><td><strong>G5 — current-limited power</strong></td><td>Props off; power core, then add one peripheral at a time</td><td>Expected rails, normal current/temperature and no limiter trip</td><td>Heat, smell, smoke, cycling, low rail voltage or limiter trip</td></tr>
+          <tr><td><strong>G6 — configuration</strong></td><td>Back up factory state; verify board orientation, receiver, endpoints, modes, OSD and failsafe</td><td>Saved backup and configuration record</td><td>Unknown firmware target, reversed controls or unverified failsafe</td></tr>
+          <tr><td><strong>G7 — motors</strong></td><td>Props still off; verify motor number, direction and response to tilt</td><td>All four match firmware diagram and compensation direction</td><td>Wrong motor, wrong direction, desync, noise, heat or unexpected arming</td></tr>
+          <tr><td><strong>G8 — first hover</strong></td><td>Correct props fitted only now; controlled low hover in a legal isolated area</td><td>Stable response, safe disarm, log and post-flight temperatures</td><td>Oscillation, drift beyond pilot control, hot hardware, damaged prop or abnormal sound</td></tr>
+          <tr><td><strong>G9 — acceptance</strong></td><td>Repeat defined flight/inspection and record faults, repair time, mass and energy</td><td>All acceptance items pass on the same revision</td><td>Undocumented rework or inconsistent result</td></tr>
+        </tbody>
+      </table></div>
+      <div class="danger"><strong>Propeller rule:</strong> remove propellers for firmware changes, receiver/failsafe setup and initial motor testing. Betaflight’s current setup guide explicitly requires props-off motor tests and a props-off failsafe check. <a href="https://betaflight.com/docs/wiki/getting-started/setup-guide">Betaflight Setup Guide [S5]</a></div>
+
+      <h3>Fault isolation: change one variable</h3>
+      <div class="diagram"><div class="flow"><div class="box">Observe<br><small>what exactly failed?</small></div><div class="arrow">→</div><div class="box">Localise<br><small>power, signal, configuration or mechanics?</small></div><div class="arrow">→</div><div class="box">Swap / measure one item</div><div class="arrow">→</div><div class="box">Does fault follow the item?</div><div class="arrow">→</div><div class="box">Record root cause + corrective action</div></div></div>
+      <p>Example: if one motor stutters, first remove props and inspect it. Swapping the motor with a known position can reveal whether the fault follows the motor or remains with the ESC channel/wiring. Do not replace three components at once and call the result understood.</p>
+
+      <h3>LiPo handling lifecycle</h3>
+      <div class="cards">
+        <article class="card"><h3>Before charge</h3><p>Inspect for swelling, cuts, crushed corners, damaged leads and connector contamination. Confirm cell count, chemistry, charge current and balance connection.</p></article>
+        <article class="card"><h3>During charge</h3><p>Attend the process on a noncombustible surface in a planned location. Stop on heat, swelling, odour, cell imbalance or charger error.</p></article>
+        <article class="card"><h3>Storage</h3><p>Use the battery/charger manufacturer’s storage-voltage procedure, protect terminals and isolate from heat and combustible material. Log packs by identifier.</p></article>
+        <article class="card"><h3>After crash</h3><p>Disconnect only if safe, move people away, observe in a suitable isolated area and do not recharge a pack with suspected damage.</p></article>
+        <article class="card"><h3>Transport</h3><p>Protect terminals from short circuit and check carrier rules. FAA guidance requires spare lithium batteries in carry-on baggage and typically limits ordinary passenger batteries by watt-hours; airline rules can be stricter.</p></article>
+        <article class="card"><h3>Retirement</h3><p>Quarantine and use a locally approved battery-recycling/disposal route. Do not place a damaged energy pack in ordinary storage or reuse it to “see if it is fine.”</p></article>
+      </div>
+
+      <h3>Day 5 gate</h3>
+      <ul class="checklist">
+        <li>I can explain why dry-fit comes before soldering and current-limited power comes before normal battery power.</li>
+        <li>I can state the pass evidence and stop condition for every build gate.</li>
+        <li>I can isolate a motor/ESC fault by changing one variable and recording the result.</li>
+        <li>I have a battery incident plan before charging or connecting a pack.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="day6" aria-labelledby="day6-title">
+      <div class="section-head">
+        <span class="day-label">Day 6 · Frame engineering and manufacturing</span>
+        <h2 id="day6-title">The frame is a load path, an interface map and a production process.</h2>
+        <p class="plain">A frame is not successful because the CAD looks like a drone. It must carry thrust and crash loads, protect interfaces, control vibration, assemble predictably, permit repair and be inspectable with affordable processes.</p>
+      </div>
+
+      <h3>Follow the load</h3>
+      <div class="diagram">
+        <div class="diagram-title">Primary load path in hover and landing</div>
+        <div class="flow"><div class="box">Propeller thrust + motor torque</div><div class="arrow">→</div><div class="box">Motor bolts + arm end</div><div class="arrow">→</div><div class="box">Arm bending / torsion</div><div class="arrow">→</div><div class="box">Arm clamp / body plates</div><div class="arrow">→</div><div class="box">Battery + payload + inertia</div></div>
+        <div class="flow" style="margin-top:10px"><div class="box">Landing or crash impulse</div><div class="arrow">→</div><div class="box">Feet / arm / plate contact</div><div class="arrow">→</div><div class="box">Joints + fastener holes</div><div class="arrow">→</div><div class="box">Masses resist motion</div></div>
+        <p class="diagram-note">Hover is not the worst case for a crashable FPV frame. Impacts create short, high loads and can reveal stress concentrations around holes, sharp internal corners and abrupt section changes.</p>
+      </div>
+
+      <h3>Material is a system choice</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Material/process</th><th>Useful properties</th><th>Weaknesses / controls</th><th>Best early use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Carbon-fibre laminate plate</strong></td><td>High stiffness-to-mass; flat CNC-cut geometry; familiar FPV frame method</td><td>Anisotropic laminate, abrasive/conductive dust, delamination and edge damage; not bendable like sheet metal</td><td>Arms and body plates, initially outsourced</td></tr>
+          <tr><td><strong>Carbon tube</strong></td><td>Efficient beam; scalable length; useful for larger modular arms/landing gear</td><td>Clamp crushing, drilling damage, rotation in joints and difficult end interfaces</td><td>X500-style architecture experiments</td></tr>
+          <tr><td><strong>6061-class aluminium</strong></td><td>Machinable, inspectable, ductile, electrically/thermally conductive</td><td>Heavier for equivalent stiffness; can permanently bend; alloy/temper must be specified</td><td>Jigs, motor mounts, brackets and test fixtures</td></tr>
+          <tr><td><strong>Engineering nylon</strong></td><td>Tough, good for clips/connectors, can be printed or moulded</td><td>Moisture, print orientation, creep and dimensional change; printing is not injection moulding</td><td>Low-volume connectors after conditioning/process tests</td></tr>
+          <tr><td><strong>Glass-filled nylon</strong></td><td>Higher stiffness than unfilled nylon; common production connector material</td><td>Abrasive to nozzles, anisotropic when printed, brittle trade-offs; moulded data does not equal printed data</td><td>Connector prototypes with process qualification</td></tr>
+          <tr><td><strong>TPU</strong><br>thermoplastic polyurethane</td><td>Flexible, impact tolerant, grips cameras/antennas and provides sacrificial protection</td><td>Creep, inconsistent dimensions, heat sensitivity and slow printing</td><td>Camera, antenna, bumper and wire-retention parts</td></tr>
+          <tr><td><strong>PETG / PLA prototypes</strong></td><td>Cheap and fast for shape/fixture checks</td><td>Not evidence for flight loads or temperature durability</td><td>Fit models, drill templates and visual prototypes only</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Carbon laminate is directional</h3>
+      <div class="two-col">
+        <div class="card"><h3>Layup</h3><p>Fibres carry load most efficiently along their direction. A quasi-isotropic plate uses multiple directions—commonly 0°, 90° and ±45°—to reduce directional weakness. “Carbon-looking” surface weave does not disclose the entire internal layup.</p><p>Specify supplier, product/grade, thickness tolerance, layup/orientation, resin system or service temperature where relevant, surface finish and lot traceability.</p></div>
+        <div class="card"><h3>Geometry</h3><p>Thickness strongly affects bending stiffness, but more thickness adds mass and does not remove stress concentrations. Use generous internal radii, adequate edge distance around holes and supported fastener interfaces.</p><p>Replaceable arms localise common crash damage. Sacrificial printed bumpers or mounts should fail harmlessly before expensive electronics or body plates.</p></div>
+      </div>
+
+      <h3>File formats are not interchangeable</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Artifact</th><th>Job</th><th>What it does not prove</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Parametric CAD</strong></td><td>Editable design intent, dimensions, features and assemblies</td><td>That every feature can be manufactured or inspected</td></tr>
+          <tr><td><strong>STEP</strong></td><td>Neutral 3D solid/surface exchange between CAD systems</td><td>Original parametric history or production tolerances</td></tr>
+          <tr><td><strong>DXF</strong></td><td>2D profiles for plate cutting and inspection templates</td><td>Material, thickness, edge finish, countersink side or tolerance unless documented</td></tr>
+          <tr><td><strong>STL</strong></td><td>Triangulated surface used for 3D printing</td><td>Exact design dimensions, material, orientation, infill or print process</td></tr>
+          <tr><td><strong>Production drawing</strong></td><td>Defines datums, dimensions, tolerances, material, finish, notes and revision</td><td>Process capability until parts are measured</td></tr>
+          <tr><td><strong>Assembly BOM + drawing</strong></td><td>Defines what revision of each part joins and how</td><td>That assembly is mistake-proof or tested</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Datums and tolerances: beginner example</h3>
+      <p>A <strong>datum</strong> is a declared reference feature from which other geometry is located. For a flat bottom plate, the primary datum might be one broad face; a mounting-hole axis and an edge can establish the remaining directions. This prevents each inspector from measuring from a different convenient edge.</p>
+      <div class="warn"><strong>Do not write ±0.1 mm everywhere.</strong> Tight tolerances cost money and may still fail to protect the real function. Start from the interface: motor-hole position must fit the motor; paired plates must align; an arm slot must retain without crushing. Assign tolerances based on function and supplier capability, then verify them with first articles.</div>
+
+      <h3>Design-for-X checklist</h3>
+      <div class="cards">
+        <article class="card"><h3>Manufacture</h3><p>Use available stock thicknesses, cutter access, internal radii, repeatable workholding, nesting and standard tools. Avoid features that require extra setups without functional value.</p></article>
+        <article class="card"><h3>Assembly</h3><p>Reduce fastener varieties, prevent reversed parts, give tools access and add harness retention. Track build time and rework.</p></article>
+        <article class="card"><h3>Inspection</h3><p>Make critical dimensions reachable with the chosen gauge. Define datums and go/no-go fixtures for repeated interfaces.</p></article>
+        <article class="card"><h3>Repair</h3><p>Replace common crash parts without desoldering the entire aircraft. Protect connectors and retain configuration/as-built data.</p></article>
+        <article class="card"><h3>Packaging</h3><p>Prevent sharp carbon edges and loose hardware from damaging parts. Include part identity, revision, instructions and count verification.</p></article>
+        <article class="card"><h3>Supply</h3><p>Use standard thicknesses, fasteners and interfaces; qualify alternate materials/processes by test rather than assuming equivalence.</p></article>
+      </div>
+
+      <h3>Process comparison</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Process</th><th>Good for</th><th>Main limits</th><th>Prototype decision</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CNC routing</strong></td><td>Flat carbon plates, slots, holes and repeatable profiles</td><td>Dust, tool wear, fixturing, delamination, machine contamination</td><td>Outsource first; internalise only with enclosure/extraction and demand</td></tr>
+          <tr><td><strong>Abrasive waterjet</strong></td><td>Flat profiles without airborne dry cutting at your shop</td><td>Edge quality, taper, water ingress/cleanup and supplier experience must be qualified</td><td>Request samples and measure; do not assume aerospace edge quality</td></tr>
+          <tr><td><strong>Laser</strong></td><td>Some metals and polymers</td><td>Carbon/epoxy heat damage, fumes and poor edges; typical laser is not a CFRP production solution</td><td>Exclude for structural CFRP unless a qualified specialist process proves it</td></tr>
+          <tr><td><strong>Manual saw/drill</strong></td><td>Rough coupons or emergency one-off work</td><td>Poor repeatability, same dust hazard, edge damage and labour</td><td>Not a credible series frame process</td></tr>
+          <tr><td><strong>3D printing</strong></td><td>Pods, mounts, fixtures, fit models and low-volume connectors</td><td>Layer orientation, moisture, creep, surface and process variability</td><td>Bring in-house early; qualify material and recipe per part</td></tr>
+          <tr><td><strong>Moulded composite</strong></td><td>Integrated curved shells and larger repeatable structures</td><td>Tooling, layup process, cure control, inspection and labour</td><td>Later product-specific path, not needed for P1</td></tr>
+          <tr><td><strong>Injection moulding</strong></td><td>High-volume polymer connectors with repeatable cycle time</td><td>Tooling capital, shrink/warpage, design freeze and MOQ</td><td>Do not buy tooling before connector geometry and demand stabilise</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Carbon machining is a dedicated cell</h3>
+      <div class="diagram"><div class="flow"><div class="box">Closed cutting enclosure</div><div class="arrow">→</div><div class="box">Capture at tool / source</div><div class="arrow">→</div><div class="box">Suitable filtered extraction</div><div class="arrow">→</div><div class="box">Controlled cleanup + waste</div><div class="arrow">→</div><div class="box">Inspection outside contamination path</div></div></div>
+      <div class="danger"><strong>Not in living space:</strong> carbon-fibre machining creates fine, abrasive and electrically conductive dust. Supplier safety information warns it can irritate and can short electrical equipment. A dust boot alone is not an enclosure or a complete exposure-control design. Use a separate controlled workshop, source capture, suitable filtration, PPE, documented cleanup and local occupational/fire review. <a href="https://cfpcomposites.com/data/CFP%20Composites%20MSDS%20ROCCS%20360%20v4.pdf">CFP Composites safety data [S16]</a></div>
+
+      <h3>Why outsource carbon first</h3>
+      <div class="two-col">
+        <div class="card"><h3>Outsourced cutting teaches the product</h3><p>You still own requirements, CAD, drawings, material specification, inspection, assembly, tests, revisions and supplier management. You avoid buying a hazardous process before knowing part volume or geometry.</p></div>
+        <div class="card"><h3>Internal cutting teaches the process</h3><p>It becomes rational when recurring external cost, lead time, confidentiality or iteration speed outweigh a complete internal cell—including operator time, scrap, maintenance, extraction, metrology and compliance.</p></div>
+      </div>
+      <div class="success"><strong>Suggested in-house gate:</strong> do not purchase a carbon router until (1) an original frame revision has passed mechanical/flight tests, (2) at least two external suppliers have quoted it, (3) expected monthly demand and saved lead time are recorded, (4) a separate workspace and extraction design are approved, and (5) the payback model includes labour, scrap, tools, maintenance and downtime.</div>
+
+      <h3>Jigs and fixtures</h3>
+      <div class="cards">
+        <article class="card"><h3>Assembly nest</h3><p>Locates plates and arms from defined datums while fasteners are installed. It should prevent mirror/reversal errors and keep tools accessible.</p></article>
+        <article class="card"><h3>Arm drilling fixture</h3><p>Locates tube or plate features without measuring each part by hand. Bushings or replaceable wear elements control repeated holes.</p></article>
+        <article class="card"><h3>Go/no-go gauge</h3><p>Quickly proves a functional interface such as motor-hole pattern, stack clearance or arm width. It does not replace all dimensional inspection.</p></article>
+        <article class="card"><h3>Harness board</h3><p>Defines wire lengths, branches and connector orientation; supports continuity test and visual comparison.</p></article>
+        <article class="card"><h3>Bend-test fixture</h3><p>Applies a repeatable span and load position to coupons/arms while deflection and failure are measured.</p></article>
+        <article class="card"><h3>Camera/CoG fixture</h3><p>Checks payload field of view, prop intrusion and balance range across battery positions.</p></article>
+      </div>
+
+      <h3>Quality flow from receiving to shipment</h3>
+      <div class="diagram"><div class="flow"><div class="box">Incoming inspection<br><small>identity, lot, damage, certificates</small></div><div class="arrow">→</div><div class="box">First article<br><small>full drawing + process proof</small></div><div class="arrow">→</div><div class="box">In-process checks<br><small>tool, fixture, critical features</small></div><div class="arrow">→</div><div class="box">Final acceptance<br><small>assembly + functional test</small></div><div class="arrow">→</div><div class="box">Serial + traveler + pack</div></div></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Control</th><th>Record</th><th>If it fails</th></tr></thead>
+        <tbody>
+          <tr><td>Incoming material/part</td><td>Supplier, PO, part/revision, lot/date code, quantity, damage and sampled dimensions</td><td>Quarantine; do not mix with accepted stock</td></tr>
+          <tr><td>First article inspection</td><td>Every drawing characteristic plus material/process evidence for the first part of a new revision/process</td><td>Correct drawing/process; repeat first article</td></tr>
+          <tr><td>In-process</td><td>Tool life/count, fixture identity, critical dimensions and operator</td><td>Stop process; contain parts since last known-good check</td></tr>
+          <tr><td>Final</td><td>Mass, appearance, fasteners, clearances, electrical and functional acceptance</td><td>Open non-conformance; repair only by approved disposition</td></tr>
+          <tr><td>Traceability</td><td>Aircraft serial linked to frame revision, component lots, firmware and test log</td><td>No shipment when configuration cannot be reconstructed</td></tr>
+          <tr><td>Non-conformance</td><td>Problem, containment, root cause, disposition, authorisation and corrective action</td><td>Never erase or silently rework the evidence</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Tests: define method before numeric limits</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Test</th><th>Method to establish now</th><th>Initial pass logic</th><th>Numeric threshold status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Material coupon bend</strong></td><td>Fixed span, coupon geometry/orientation, loading point/rate and deflection measurement</td><td>No unexpected delamination; repeatability and failure mode recorded</td><td><span class="tag rfq">derive from loads + safety factor</span></td></tr>
+          <tr><td><strong>Arm bending/torsion</strong></td><td>Production interface clamped; motor-end load and twist measured</td><td>Returns within defined permanent-set limit and retains fasteners</td><td><span class="tag rfq">after P1 load cases</span></td></tr>
+          <tr><td><strong>Vibration</strong></td><td>Known prop/motor, FC logs and repeatable throttle/flight profile</td><td>Sensor/filter data stays within firmware/hardware guidance; no loosened parts</td><td><span class="tag rfq">use log evidence</span></td></tr>
+          <tr><td><strong>Temperature</strong></td><td>Conditioned hot/cold soak relevant to intended environment, then fit/load test</td><td>No unsafe deformation, cracking, connector release or calibration loss</td><td><span class="tag rfq">mission environment unknown</span></td></tr>
+          <tr><td><strong>Fastener retention</strong></td><td>Specified fastener, installation method, vibration cycles and removal torque/check</td><td>No loosening or damaged joint; service remains possible where required</td><td><span class="tag rfq">validate joint design</span></td></tr>
+          <tr><td><strong>Controlled crash/drop</strong></td><td>Defined mass, orientation, height/speed and safe test fixture</td><td>Failure is contained and sacrificial; battery is protected; repair scope recorded</td><td><span class="tag rfq">risk-based test plan</span></td></tr>
+          <tr><td><strong>Fatigue</strong></td><td>Repeated representative bending/vibration cycle with inspection intervals</td><td>No crack/delamination growth or unacceptable stiffness change over target life</td><td><span class="tag rfq">life target unknown</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Reference designs and intellectual-property boundary</h3>
+      <div class="two-col">
+        <div class="card"><h3>Source PodRacer</h3><p>The repository provides CAD, STEP, STL and DXF files under GPLv3 and explicitly asks manufacturers to prefix the Source PodRacer name with their brand and state the source version. A fork should use a different name. GPL obligations and source distribution must be reviewed before commercial use; do not remove attribution or version identity.</p><p class="source-ref"><a href="https://github.com/ps915/source_podracer">Repository and licence [S11]</a></p></div>
+        <div class="card"><h3>Holybro X500 V2</h3><p>Holybro publishes CAD/printable reference files and product dimensions, but downloadable CAD is not evidence of a licence to manufacture and sell copies. Use its architecture to learn about tube arms, payload rails and modular integration. Develop an original requirement set and geometry before commercial production.</p><p class="source-ref"><a href="https://docs.holybro.com/drone-development-kit/px4-development-kit-x500v2/download">Holybro downloads [S10]</a></p></div>
+      </div>
+
+      <h3>From reference to original Georgian frame</h3>
+      <div class="diagram"><div class="flow"><div class="box">Observe reference architectures</div><div class="arrow">→</div><div class="box">Interview users + define mission</div><div class="arrow">→</div><div class="box">Write measurable requirements</div><div class="arrow">→</div><div class="box">Generate multiple concepts</div><div class="arrow">→</div><div class="box">Analyse + prototype</div><div class="arrow">→</div><div class="box">Test, revise, document original design</div></div></div>
+      <p>Keep a design log that shows why each interface exists and which evidence drove it. This is better engineering and helps distinguish independent product development from copying appearance.</p>
+
+      <h3>Day 6 gate</h3>
+      <ul class="checklist">
+        <li>I can trace motor and landing loads through an arm, joint and body plate.</li>
+        <li>I can explain why carbon layup, thickness and geometry all matter.</li>
+        <li>I can distinguish CAD/STEP/DXF/STL/drawing/BOM and state what each omits.</li>
+        <li>I can design an inspection/assembly fixture around functional datums.</li>
+        <li>I understand why outsourcing still builds manufacturing knowledge.</li>
+        <li>I will not machine carbon in living space or infer commercial rights from downloadable files.</li>
+      </ul>
+    </section>
+
+    <section class="section dark" id="day3" aria-labelledby="day3-title">
+      <div class="section-head">
+        <span class="day-label">Day 3 · Propulsion and electrical sizing</span>
+        <h2 id="day3-title">Choose a propulsion system, not isolated parts.</h2>
+        <p class="plain">Start with mission and estimated take-off mass. That constrains the propeller. The propeller constrains motor size and speed. Motor plus propeller plus battery voltage determines current. The ESC and battery must safely supply that current.</p>
+      </div>
+
+      <div class="diagram">
+        <div class="diagram-title">The compatibility chain — follow it from left to right</div>
+        <div class="flow">
+          <div class="box">Mission + mass<br><small>what must move?</small></div><div class="arrow">→</div>
+          <div class="box">Propeller<br><small>air disc + load</small></div><div class="arrow">→</div>
+          <div class="box">Motor<br><small>torque + speed</small></div><div class="arrow">→</div>
+          <div class="box">Battery S<br><small>voltage</small></div><div class="arrow">→</div>
+          <div class="box">ESC<br><small>current + protocol</small></div><div class="arrow">→</div>
+          <div class="box">Battery Ah<br><small>energy + mass</small></div>
+        </div>
+        <p class="diagram-note">Then loop back: the selected battery and hardware change mass, so recalculate. Do not freeze the design until the loop converges and bench data supports it.</p>
+      </div>
+
+      <h3>Inside a brushless motor</h3>
+      <div class="cards">
+        <article class="card"><span class="icon">◎</span><h3>Stator</h3><p>Stationary steel laminations and copper windings create a rotating magnetic field. “1404” usually means an approximately 14 mm stator diameter and 4 mm stator height—not the outside motor dimensions.</p></article>
+        <article class="card"><span class="icon">◉</span><h3>Rotor / bell</h3><p>The rotating outer bell carries permanent magnets. The propeller attaches to its shaft or mounting hub.</p></article>
+        <article class="card"><span class="icon">↻</span><h3>Three phases</h3><p>The ESC rapidly switches battery power through three motor wires. Swapping phase order or changing ESC settings changes direction; modern digital protocols also carry control/telemetry.</p></article>
+      </div>
+      <p><strong>KV</strong> is the approximate no-load speed constant in revolutions per minute per volt. It is not power, quality or torque. Higher voltage and higher KV both push speed upward; larger props require more torque and often lower KV. Use the manufacturer’s motor-prop-voltage test table, not KV alone.</p>
+
+      <h3>How propeller choices change the load</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Variable</th><th>Increase usually does this</th><th>Engineering consequence</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Diameter</strong></td><td>Moves a larger air disc; can improve low-disc-loading efficiency and maximum thrust</td><td>Requires more clearance and torque; current can rise sharply</td></tr>
+          <tr><td><strong>Pitch</strong></td><td>Attempts to advance farther per revolution</td><td>Loads the motor more; may increase speed potential and current</td></tr>
+          <tr><td><strong>Blade count</strong></td><td>Adds blade area in the same diameter</td><td>Can add grip/response but usually adds load and reduces efficiency</td></tr>
+          <tr><td><strong>Stiffness / mass</strong></td><td>Changes deformation and rotational inertia</td><td>Affects response, vibration, current spikes and crash behaviour</td></tr>
+          <tr><td><strong>Mount</strong></td><td>Does not change aerodynamics but controls mechanical compatibility</td><td>Shaft diameter, bolt pattern and hub height must match exactly</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>The ESC is the power valve</h3>
+      <p>An <strong>electronic speed controller (ESC)</strong> turns flight-controller commands into timed current through a brushless motor’s three phases. A four-in-one ESC contains four channels. Its continuous rating must exceed measured or manufacturer-tested current for the chosen motor-prop-voltage combination with thermal margin. A “burst” rating is time- and cooling-dependent; it cannot rescue an undersized continuous design.</p>
+      <div class="two-col">
+        <div class="card"><h3>Electrical checks</h3><ul><li>Battery cell count within ESC and motor limits</li><li>Expected per-motor current below the real channel limit</li><li>Total connector, wire and battery current capability</li><li>Regulated 5 V rails sized for camera, receiver and VTX</li><li>Capacitor voltage rating and polarity</li></ul></div>
+        <div class="card"><h3>Control checks</h3><ul><li>Flight-controller output protocol supported by ESC firmware</li><li>Correct motor order and direction</li><li>Telemetry compatibility if used</li><li>Accessible firmware/configuration record</li><li>Cooling representative of the intended installation</li></ul></div>
+      </div>
+
+      <h3>LiPo: voltage, energy and risk</h3>
+      <div class="cards">
+        <article class="card"><h3>S count</h3><p>Cells in <strong>series</strong> add voltage. A conventional LiPo is about 3.7 V nominal per cell: 4S is about 14.8 V nominal. Actual voltage changes with charge and load.</p></article>
+        <article class="card"><h3>Capacity</h3><p>Milliamp-hours (mAh) describe charge capacity. Convert to amp-hours by dividing by 1,000. A larger pack stores more energy but also adds mass.</p></article>
+        <article class="card"><h3>Watt-hours</h3><p>Energy estimate: nominal volts × amp-hours. Watt-hours compare packs of different voltages better than mAh alone.</p></article>
+        <article class="card"><h3>C-rating</h3><p>A claimed discharge multiplier: theoretical current = capacity in Ah × C. Hobby labels are not enough for production qualification; measure sag and temperature.</p></article>
+        <article class="card"><h3>Voltage sag</h3><p>Internal resistance makes loaded voltage fall. Excessive sag reduces available thrust and produces heat even if open-circuit voltage looked healthy.</p></article>
+        <article class="card"><h3>Balance lead</h3><p>Allows a balance charger to observe individual cell voltages. The main lead carries propulsion current; connector type and polarity must match the aircraft and charger.</p></article>
+      </div>
+      <div class="danger"><strong>LiPo rule:</strong> charge only with a compatible balance charger and verified settings, attend charging, use a noncombustible location, protect against short circuit and retire damaged or swollen packs. Lithium batteries can enter thermal runaway after damage, overheating or overcharge. <a href="https://www.faa.gov/hazmat/packsafe/lithium-batteries">FAA lithium battery hazard/transport overview [S14]</a></div>
+
+      <h3>Worked examples — architecture demonstrations, not promises</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Platform</th><th>Propulsion logic</th><th>Evidence status</th><th>What must be measured</th></tr></thead>
+        <tbody>
+          <tr><td><strong>4-inch candidate</strong></td><td>4-inch 2-blade prop → 1404-class 2750 KV motor → 4S battery. Happymodel publishes up to 256.5 g thrust and 5.2 A for one EX1404-2750 KV with a Gemfan 4024 at 14.8 V.</td><td><span class="tag verified">manufacturer bench data</span><br>Not the exact chosen prop, installed cooling or finished aircraft.</td><td>All-up mass, four-motor current, hover current, sag, temperature, vibration and endurance with reserve.</td></tr>
+          <tr><td><strong>5-inch example</strong></td><td>5-inch prop normally requires a larger stator and more current than this 1404 example. Choose an actual motor family only after estimating mass and reading its 5-inch test table.</td><td><span class="tag rfq">candidate not selected</span></td><td>Complete candidate BOM, thrust table, clearance, maximum current and mass.</td></tr>
+          <tr><td><strong>X500 reference</strong></td><td>Holybro’s reference uses four 2216 920 KV motors, 10×4.5-inch props and a 4S 3,000–5,000 mAh pack.</td><td><span class="tag verified">reference architecture</span><br>Holybro’s claims apply to its tested configuration, not an original copy.</td><td>Original frame mass/stiffness, actual propulsion test, payload, CoG, vibration and thermal performance.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="source-ref"><a href="https://www.happymodel.cn/index.php/2021/01/07/happymodel-ex1404-kv2750-kv3500-kv4800-brushless-motor/">Happymodel EX1404 bench table [S8]</a> · <a href="https://holybro.com/products/x500-v2-kits">Holybro X500 V2 reference [S10]</a></p>
+
+      <div class="worksheet" id="propulsion-calculator">
+        <h3>Worksheet A — thrust-to-weight and endurance estimate</h3>
+        <p>Enter measured values when they exist. Defaults are labelled examples. “Usable capacity” is a planning reserve, not a universal safe-discharge rule.</p>
+        <div class="worksheet-grid">
+          <label>Take-off mass (g)<input id="calc-mass" type="number" min="1" step="1" value="290"></label>
+          <label>Tested thrust per motor (g)<input id="calc-thrust" type="number" min="1" step="0.1" value="256.5"></label>
+          <label>Motor count<input id="calc-motors" type="number" min="1" max="12" step="1" value="4"></label>
+          <label>Battery capacity (mAh)<input id="calc-capacity" type="number" min="1" step="1" value="850"></label>
+          <label>Usable capacity (%)<input id="calc-usable" type="number" min="1" max="100" step="1" value="80"></label>
+          <label>Measured average current (A)<input id="calc-current" type="number" min="0.1" step="0.1" value="10"></label>
+        </div>
+        <div class="worksheet-grid">
+          <div><label>Static thrust-to-weight estimate</label><output id="calc-ratio">3.54 : 1</output></div>
+          <div><label>Energy-limited time estimate</label><output id="calc-time">4.1 min</output></div>
+          <div><label>Status</label><output id="calc-status">Illustrative only</output></div>
+        </div>
+        <div class="formula">ratio = (per-motor thrust × motor count) ÷ take-off mass<br>minutes = (capacity Ah × usable fraction ÷ average current A) × 60</div>
+        <p class="caption">Static bench thrust is not in-flight thrust. Average current changes with flying style, wind, propeller, tune, battery sag and aircraft mass. Use this to plan tests, never to advertise endurance.</p>
+      </div>
+
+      <h3>Day 3 gate</h3>
+      <ul class="checklist">
+        <li>I can follow the full mission-to-battery compatibility chain and then recalculate mass.</li>
+        <li>I will use an exact motor-prop-voltage test table, not KV or prop diameter alone.</li>
+        <li>I can calculate watt-hours and explain why a larger battery can both help and hurt endurance.</li>
+        <li>I can label every endurance or thrust result as estimated, bench-tested or flight-measured.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="day4" aria-labelledby="day4-title">
+      <div class="section-head">
+        <span class="day-label">Day 4 · Flight controller, firmware, radio and video</span>
+        <h2 id="day4-title">Power moves energy. Signals move intent.</h2>
+        <p class="plain">The battery does not “talk” to a motor and the radio does not directly power it. Separate the high-current power path, regulated accessory power, command data, sensor data and video path before wiring anything.</p>
+      </div>
+
+      <div class="diagram">
+        <div class="diagram-title">Power paths</div>
+        <div class="flow"><div class="box">LiPo battery<br><small>high-energy DC</small></div><div class="arrow">→</div><div class="box">ESC / power distribution</div><div class="arrow">→</div><div class="box">4 motors<br><small>three switched phases each</small></div></div>
+        <div class="flow" style="margin-top:10px"><div class="box">Battery / regulator</div><div class="arrow">→</div><div class="box">5 V rail</div><div class="arrow">→</div><div class="box">FC + receiver + camera + VTX<br><small>only if each voltage/current matches</small></div></div>
+      </div>
+      <div class="diagram">
+        <div class="diagram-title">Data and video paths</div>
+        <div class="flow"><div class="box">Pilot radio</div><div class="arrow">⇢</div><div class="box">Receiver</div><div class="arrow">→</div><div class="box">Flight controller</div><div class="arrow">→</div><div class="box">ESC commands</div></div>
+        <div class="flow" style="margin-top:10px"><div class="box">Camera video</div><div class="arrow">→</div><div class="box">FC analog OSD</div><div class="arrow">→</div><div class="box">5.8 GHz VTX</div><div class="arrow">⇢</div><div class="box">Analog monitor</div></div>
+      </div>
+
+      <h3>The closed control loop</h3>
+      <div class="diagram">
+        <div class="flow"><div class="box">Desired motion<br><small>pilot or mission</small></div><div class="arrow">→</div><div class="box">Compare with sensors</div><div class="arrow">→</div><div class="box">Controller correction</div><div class="arrow">→</div><div class="box">Motor thrust</div><div class="arrow">→</div><div class="box">Aircraft moves</div><div class="arrow">↩</div><div class="box">Gyro / accelerometer measurement</div></div>
+        <p class="diagram-note">The gyroscope measures rotation rate. The accelerometer measures specific force and supports attitude estimation/self-level modes. GNSS, barometer and compass add position, height and heading information for navigation-capable systems.</p>
+      </div>
+
+      <h3>Subsystem dictionary</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Subsystem</th><th>Plain-language job</th><th>Critical interfaces</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Flight controller (FC)</strong></td><td>Runs firmware, reads sensors and commands actuators</td><td>Board orientation, firmware target, motor outputs, serial ports, power</td></tr>
+          <tr><td><strong>Gyroscope</strong></td><td>Measures how fast the aircraft rotates</td><td>Vibration, sample rate, orientation</td></tr>
+          <tr><td><strong>Accelerometer</strong></td><td>Helps estimate tilt and supports self-level behaviour</td><td>Calibration, vibration, mounting</td></tr>
+          <tr><td><strong>Barometer</strong></td><td>Estimates altitude from air pressure</td><td>Prop wash, enclosure pressure, weather drift</td></tr>
+          <tr><td><strong>Compass / magnetometer</strong></td><td>Measures magnetic heading</td><td>Distance from current-carrying wires and magnetic material, calibration</td></tr>
+          <tr><td><strong>GNSS / GPS</strong></td><td>Estimates global position and ground velocity from satellites</td><td>Sky view, antenna placement, interference, update rate</td></tr>
+          <tr><td><strong>Power module</strong></td><td>Supplies regulated FC power and measures battery voltage/current</td><td>Voltage/current range, connector, calibration</td></tr>
+          <tr><td><strong>Receiver (RX)</strong></td><td>Turns the pilot’s radio link into control data</td><td>Frequency, firmware/binding, antenna, serial protocol, failsafe</td></tr>
+          <tr><td><strong>Video transmitter (VTX)</strong></td><td>Modulates and broadcasts camera video</td><td>Input voltage, video standard, antenna attached, legal channel/power</td></tr>
+          <tr><td><strong>Telemetry</strong></td><td>Sends aircraft measurements to the pilot or ground station</td><td>Protocol, radio band, data rate, link budget and legal power</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Firmware is selected by the mission</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Betaflight</th><th>ArduPilot Copter</th><th>PX4</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Primary strength</strong></td><td>Responsive manual FPV flight and compact hardware</td><td>Broad autonomous/mission features and many vehicle options</td><td>Autonomy, research/development workflows and modular integration</td></tr>
+          <tr><td><strong>Typical beginner platform here</strong></td><td>4- or 5-inch analog FPV</td><td>Larger GNSS-equipped camera/development quad</td><td>X500-style development platform</td></tr>
+          <tr><td><strong>Position sensors required?</strong></td><td>No for basic manual flight; optional rescue features exist</td><td>Common for navigation modes</td><td>Common for navigation modes</td></tr>
+          <tr><td><strong>Manufacturing lesson</strong></td><td>Compact integration, fast repair, provisioning</td><td>Harnessing, sensor placement, calibration and acceptance</td><td>Vehicle geometry, interfaces, logs and development tooling</td></tr>
+          <tr><td><strong>Wrong conclusion</strong></td><td colspan="3">None is “best” in the abstract. Choose the feature and assurance set demanded by the aircraft’s job.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="source-ref"><a href="https://betaflight.com/docs/wiki/getting-started">Betaflight overview [S5]</a> · <a href="https://ardupilot.org/copter/index.html">ArduPilot Copter [S6]</a> · <a href="https://docs.px4.io/main/en/config_mc/">PX4 multicopter configuration [S7]</a></p>
+
+      <h3>Control link and FPV link are different</h3>
+      <div class="two-col">
+        <div class="card"><h3>ExpressLRS control</h3><p>A radio-control system using a transmitter and compatible receiver. Binding configuration, frequency band, packet rate, antenna installation, serial protocol and failsafe behaviour must match. Link quality is telemetry about the control link, not a guarantee of safe range.</p><p class="source-ref"><a href="https://www.expresslrs.org/quick-start/firmware-options/">ExpressLRS firmware options [S9]</a></p></div>
+        <div class="card"><h3>FPV video</h3><p>Analog FPV sends an analog television signal over a radio carrier; digital systems encode/compress video and require matching digital hardware. Video quality can fail while control still works—or vice versa—so loss responses must be planned separately.</p></div>
+      </div>
+      <div class="warn"><strong>Why the laptop does not directly receive analog 5.8 GHz FPV:</strong> ordinary laptop Wi-Fi hardware is not a tunable analog FPV television receiver. A laptop needs a compatible 5.8 GHz receiver and usually a video-capture interface; this can add latency. A direct analog monitor contains the required receiver/display path.</div>
+
+      <h3>Failure is a designed state</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Failure</th><th>What remains</th><th>Safe design question</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Control link lost</strong></td><td>FC and propulsion may still be powered</td><td>Does configured failsafe stop/land appropriately for this firmware, aircraft and test area? Verify props-off before flight.</td></tr>
+          <tr><td><strong>Video lost</strong></td><td>Control may remain healthy</td><td>Can the pilot immediately disarm/land by a pre-briefed procedure without flying blind?</td></tr>
+          <tr><td><strong>GNSS degraded</strong></td><td>Manual attitude control may remain</td><td>Can the selected mode fall back safely, and has the pilot practised the fallback? Never assume return-to-home works indoors.</td></tr>
+          <tr><td><strong>Battery/power failure</strong></td><td>Potentially nothing</td><td>Is energy reserve conservative, connection retained, voltage monitored and the test area chosen for an immediate uncontrolled landing?</td></tr>
+          <tr><td><strong>One propulsion unit fails</strong></td><td>A conventional quad usually cannot maintain controlled flight</td><td>Reduce exposure below and around the aircraft; do not market motor redundancy a quad does not have.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Georgia radio boundary</h3>
+      <p>The Georgian national frequency plan identifies industrial, scientific and medical (ISM) use around 2.4 GHz and 5.725–5.875 GHz, but that does <strong>not</strong> by itself authorize every FPV channel, modulation, antenna or output power. A 2023 Georgian table includes device-category-specific limits such as 25 mW EIRP in 5.725–5.875 GHz for a cited short-range-device category. The exact classification of an airborne FPV transmitter and a 2.4 GHz control system still needs written confirmation from the Georgian Communications Commission before operation or product design. <a class="source-ref" href="https://comcom.ge/ge/legal-acts/resolutions/radiosixshiruli-speqtris-ganawilebis-erovnuli-gegmis-damtkicebis-shesaxeb-saqartvelos-komunikaciebis-erovnuli-komisiis-2006-wlis-30-ivnisis-6-dadgenilebashi-cvlilebebis-shetanis-shesaxeb-8644.page">ComCom plan [S12]</a></p>
+      <div class="danger"><strong>Do not convert “ISM band exists” into “400 mW VTX is legal.”</strong> Start all bench work into a suitable setup, use the lowest supported power, and obtain the device-category/power/antenna/channel interpretation in writing before radiating or selling.</div>
+
+      <h3>Day 4 gate</h3>
+      <ul class="checklist">
+        <li>I can draw power, control data, telemetry and video as separate paths.</li>
+        <li>I can explain the feedback loop and the jobs of the gyro and accelerometer.</li>
+        <li>I can choose firmware based on mission features rather than popularity.</li>
+        <li>I have a distinct response for lost control, lost video, lost navigation and lost power.</li>
+        <li>I will obtain Georgian RF confirmation instead of inferring legality from a frequency-band name.</li>
+      </ul>
+    </section>
+
+    <section class="section dark" id="day1" aria-labelledby="day1-title">
+      <div class="section-head">
+        <span class="day-label">Day 1 · Categories and applications</span>
+        <h2 id="day1-title">Start with the job, not the propeller.</h2>
+        <p class="plain">A “drone” is not one product category. Architecture follows mission: hover and close inspection favour multirotors; long-area coverage favours fixed wings; carrying cameras, flying FPV and mapping the ground impose different requirements.</p>
+      </div>
+      <div class="cards">
+        <article class="card"><span class="icon">✣</span><h3>Multirotor</h3><p>Several motor-propeller units create lift and steer by changing relative thrust.</p><ul class="pros"><li>Hovers and takes off vertically</li><li>Mechanically simple</li><li>Good close-access platform</li></ul><ul class="cons"><li>Consumes power continuously to stay airborne</li><li>Shorter endurance than an efficient wing</li><li>Cannot glide safely like a fixed wing</li></ul></article>
+        <article class="card"><span class="icon">➤</span><h3>Fixed wing</h3><p>A wing creates lift while the aircraft moves forward; a propeller mainly overcomes drag.</p><ul class="pros"><li>Efficient over distance</li><li>Longer coverage per battery</li><li>Suitable for corridor and area mapping</li></ul><ul class="cons"><li>Cannot hover</li><li>Needs launch/landing space or mechanisms</li><li>Less useful for close stationary inspection</li></ul></article>
+        <article class="card"><span class="icon">↥</span><h3>VTOL</h3><p><strong>Vertical take-off and landing</strong> combines hover hardware with wing-borne cruise.</p><ul class="pros"><li>Vertical launch plus efficient cruise</li><li>Useful where runways are unavailable</li></ul><ul class="cons"><li>More actuators, software and failure modes</li><li>Higher mass, cost and integration burden</li><li>Poor first beginner aircraft</li></ul></article>
+      </div>
+
+      <h3>Application is a bundle of requirements</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Application</th><th>What matters most</th><th>Good starting architecture</th><th>What makes it hard</th></tr></thead>
+          <tbody>
+            <tr><td><strong>FPV learning</strong><br>First-person-view piloting</td><td>Low cost, repairability, low latency, predictable controls</td><td>Small 4- or 5-inch multirotor</td><td>Manual skill, exposed propellers, crash rate</td></tr>
+            <tr><td><strong>Visual inspection</strong></td><td>Stable hover, safe stand-off distance, useful camera, repeatable positioning</td><td>Position-capable multirotor</td><td>Wind, image quality, obstacle risk, operator permission</td></tr>
+            <tr><td><strong>Mapping / survey</strong></td><td>Georeferenced images, consistent overlap, calibrated payload and workflow</td><td>Multirotor for small sites; fixed wing for large sites</td><td>Data processing, accuracy proof, weather and access</td></tr>
+            <tr><td><strong>Agriculture</strong></td><td>Depends on observation versus spraying; ruggedness and service network</td><td>Camera multirotor/fixed wing for observation</td><td>Payload, chemicals and dispensing add major regulatory and safety scope</td></tr>
+            <tr><td><strong>Delivery</strong></td><td>Payload fraction, route safety, containment and reliability</td><td>Mission-specific; not a first prototype</td><td>Beyond-visual-line-of-sight operations, third-party risk and economics</td></tr>
+            <tr><td><strong>Development platform</strong></td><td>Payload rails, sensor buses, logging, open firmware and access</td><td>X500-style modular multirotor</td><td>Higher cost, heavier aircraft, more configuration</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Georgia: opportunities are hypotheses until customers validate them</h3>
+      <div class="cards">
+        <article class="card"><h3>Infrastructure documentation</h3><p>Roofs, façades, solar installations or difficult-to-view assets could value repeatable visual capture. Validate the buyer, permission process, acceptable image quality and liability before designing around it.</p></article>
+        <article class="card"><h3>Agricultural observation</h3><p>Crop imagery may be useful, but the product is the decision supported by the data—not merely the aircraft. Interview agronomists and growers before adding specialised sensors.</p></article>
+        <article class="card"><h3>Education and engineering</h3><p>A repairable Georgian frame kit and documented training system could be a lower-regulatory way to learn production. Demand, price and institutional procurement still require evidence.</p></article>
+      </div>
+      <div class="warn"><strong>Not established:</strong> no market-size or sales claim is made here. These are interview targets. A flight-capable prototype does not prove demand.</div>
+
+      <h3>Day 1 gate</h3>
+      <ul class="checklist">
+        <li>I can explain why hovering and long-distance coverage favour different architectures.</li>
+        <li>I can state one civilian customer problem without describing the aircraft as the problem.</li>
+        <li>I can distinguish learning evidence, engineering evidence and commercial evidence.</li>
+      </ul>
+      <p class="source-ref">Primary orientation: <a href="https://ardupilot.org/copter/docs/choosing-a-frame.html">ArduPilot — choose the use before the frame</a> [S3].</p>
+    </section>
+
+    <section class="section" id="day2" aria-labelledby="day2-title">
+      <div class="section-head">
+        <span class="day-label">Day 2 · Flight physics, size and geometry</span>
+        <h2 id="day2-title">Four forces. Three rotations. One unstable machine.</h2>
+        <p class="plain">A quadcopter stays up when total upward thrust equals its weight. It moves by tilting the thrust vector; it rotates by deliberately making motor thrust unequal. The flight controller repeats these corrections many times per second.</p>
+      </div>
+
+      <div class="axis-diagram">
+        <div class="quad-top" role="img" aria-label="Top view of a quadcopter with roll and pitch axes">
+          <div class="arm a"></div><div class="arm b"></div>
+          <div class="motor m1"></div><div class="motor m2"></div><div class="motor m3"></div><div class="motor m4"></div>
+          <div class="core">CENTRE OF<br>GRAVITY</div>
+          <div class="axis roll"></div><div class="axis pitch"></div>
+          <div class="axis-label roll-label">ROLL AXIS</div><div class="axis-label pitch-label">PITCH AXIS</div>
+        </div>
+        <div class="concept-list">
+          <div class="concept"><strong>Thrust</strong><span>Force from accelerating air downward. In hover, combined upward thrust balances weight.</span></div>
+          <div class="concept"><strong>Weight</strong><span>Gravity acting on the aircraft mass. More mass requires more thrust and energy.</span></div>
+          <div class="concept"><strong>Drag</strong><span>Air resistance opposing motion. A larger or untidy shape needs more power at speed.</span></div>
+          <div class="concept"><strong>Torque</strong><span>Turning effect. Propellers also twist the air; counter-rotating pairs cancel most reaction torque.</span></div>
+          <div class="concept"><strong>Roll</strong><span>Rotation around the front-to-back axis.</span></div>
+          <div class="concept"><strong>Pitch</strong><span>Rotation around the left-to-right axis.</span></div>
+          <div class="concept"><strong>Yaw</strong><span>Rotation around the vertical axis, created by changing the balance between clockwise and counter-clockwise pairs.</span></div>
+          <div class="concept"><strong>Throttle</strong><span>Pilot request affecting total thrust. It is not a direct command for one fixed motor speed.</span></div>
+        </div>
+      </div>
+
+      <div class="diagram">
+        <div class="diagram-title">How four motors control six basic motions</div>
+        <div class="flow">
+          <div class="box">Hover<br><small>all four balance weight</small></div><div class="arrow">→</div>
+          <div class="box">Climb<br><small>all four increase</small></div><div class="arrow">→</div>
+          <div class="box">Roll / pitch<br><small>one side rises, the other falls</small></div><div class="arrow">→</div>
+          <div class="box">Yaw<br><small>one rotation pair rises, the other falls</small></div>
+        </div>
+        <p class="diagram-note">The mixer preserves approximate total thrust while redistributing thrust for rotation. Exact motor order and direction come from the selected firmware/frame configuration.</p>
+      </div>
+
+      <h3>Frame names describe different measurements</h3>
+      <div class="geometry-grid">
+        <article class="geometry">
+          <div class="geometry-shape"><div class="arm a"></div><div class="arm b"></div><div class="motor m1"></div><div class="motor m2"></div><div class="motor m3"></div><div class="motor m4"></div><div class="core">4″ PROP</div></div>
+          <h3>4-inch FPV</h3><p>“Four inch” usually means nominal propeller diameter, not motor-to-motor wheelbase. Packaging is compact and clearances are tight.</p>
+        </article>
+        <article class="geometry">
+          <div class="geometry-shape deadcat"><div class="arm a"></div><div class="arm b"></div><div class="motor m1"></div><div class="motor m2"></div><div class="motor m3"></div><div class="motor m4"></div><div class="core">5″ PROP</div></div>
+          <h3>5-inch FPV</h3><p>Five-inch propellers and a larger footprint provide more packaging room and propulsion choices, but increase kinetic energy and test-space needs.</p>
+        </article>
+        <article class="geometry">
+          <div class="geometry-shape tube"><div class="arm a"></div><div class="arm b"></div><div class="motor m1"></div><div class="motor m2"></div><div class="motor m3"></div><div class="motor m4"></div><div class="core">500 mm</div></div>
+          <h3>X500-style</h3><p>“500” refers to an approximately 500 mm diagonal motor wheelbase. Typical frames use larger props, tube arms, landing gear and payload decks.</p>
+        </article>
+      </div>
+
+      <h3>True-X, dead-cat and clearance</h3>
+      <div class="two-col">
+        <div class="card"><h3>True-X</h3><p>Motors form a symmetric X. Roll and pitch leverage are similar, which makes dynamics and structural repetition simple. Forward propellers may enter a wide camera view.</p><h3>Dead-cat</h3><p>Front arms spread or shift so forward propellers stay out of the camera image. Geometry becomes less symmetric and the mixer/tune must match the real motor positions.</p></div>
+        <div class="card"><h3>Propeller clearance is a hard interface</h3><p>At minimum, the rotating discs must not intersect each other, the frame, battery, wires or camera. Real clearance must also allow blade flex, manufacturing tolerance and crash deformation.</p><div class="formula">tip gap = centre distance − prop diameter</div><p class="caption">For adjacent equal propellers. A positive geometric gap is necessary, but the acceptable operating margin must be proven for the chosen propeller and frame.</p></div>
+      </div>
+
+      <h3>Why centre of gravity matters</h3>
+      <p>The <strong>centre of gravity (CoG)</strong> is the balance point of the complete aircraft, including battery and payload. If it is displaced, the controller must maintain unequal motor thrust even in level hover. That consumes control margin and can heat one side. PX4 recommends placing the flight controller close to the CoG and configuring its offset when that is not possible. <a class="source-ref" href="https://docs.px4.io/main/en/assembly/mount_and_orient_controller.html">PX4 mounting guidance [S4]</a></p>
+
+      <h3>The 250 g line</h3>
+      <p>Georgia’s current GCAA portal describes an Open category for aircraft below 25 kg under specified operational conditions, and a C0 class below 250 g with additional design limits. Privately built and class-labelled aircraft are not automatically the same legal object. Treat 250 g as an important design target, not a statement that this prototype qualifies for a particular class or operation. Always check registration, subcategory, training, airspace and operating conditions before flight. <a class="source-ref" href="https://uas.gov.ge/EN">GCAA UAS portal [S1]</a></p>
+      <div class="warn"><strong>Measurement rule:</strong> “designed to be under 250 g” is not “under 250 g.” Compliance uses the finished maximum take-off mass, including battery and payload, measured on a suitable scale.</div>
+
+      <h3>Day 2 gate</h3>
+      <ul class="checklist">
+        <li>I can explain how changing relative motor thrust creates roll, pitch and yaw.</li>
+        <li>I know that propeller size and frame wheelbase are different measurements.</li>
+        <li>I can sketch the intended propeller discs and identify every clearance interface.</li>
+        <li>I will not claim a weight class before weighing the complete aircraft.</li>
+      </ul>
+      <p class="source-ref">Flight explanation: <a href="https://ardupilot.org/copter/docs/what-is-a-multicopter-and-how-does-it-work.html">ArduPilot multicopter fundamentals [S2]</a>.</p>
+    </section>
+</body>
+</html>
