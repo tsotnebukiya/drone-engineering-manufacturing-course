@@ -12,15 +12,15 @@ Buy the bench and solder-learning setup first. It is useful even if the aircraft
 
 | Purchase stage | Known total | What it enables |
 |---|---:|---|
-| Stage 0 — bench, storage, and safety | **₾607.90** | A stable, lit, noncombustible work area with source fume capture |
-| Stage 1 — solder-learning tools | **₾540.10** | Unpowered practice on perfboard, inspection, continuity checks, and rework |
-| **Immediate complete setup** | **₾1,148.00** | Everything needed for the seven-day course's solder-learning portion |
-| Stage 2 — aircraft-assembly additions | **₾188.50** | Mechanical assembly, insulation, strain relief, and heat-shrink work |
-| **Known total through assembly-ready** | **₾1,336.50** | Does **not** yet authorize first battery power-up |
+| Stage 0 — bench, storage, and safety | **₾620.80** | A stable, lit, noncombustible work area with source fume capture |
+| Stage 1 — solder-learning tools | **₾535.90** | Unpowered practice on perfboard, inspection, continuity checks, and rework |
+| **Immediate priced setup** | **₾1,156.70** | Priced basket for the seven-day course; the extractor must be restocked or replaced before this is complete |
+| Stage 2 — aircraft-assembly additions | **₾171.70** | Mechanical assembly, insulation, strain relief, and heat-shrink work |
+| **Known total through assembly-ready** | **₾1,328.40** | Does **not** yet authorize first battery power-up |
 | Stage 3 — charger and measurement tools | **₾316.00** | Charging/storage and prototype weight/dimension records, after a fresh compatibility check |
-| **Known eventual total** | **₾1,652.50** | Excludes unresolved items and delivery |
+| **Known eventual total** | **₾1,644.40** | Excludes unresolved items and delivery |
 
-The immediate total assumes a new desk, lamp, storage, and extinguisher. If a stable existing desk, lamp, and storage are already suitable, the Stage 1 setup plus the essential mat, extractor, glasses, extinguisher, and grounded power strip is about **₾805.10**.
+The immediate total assumes a new desk, lamp, storage, and extinguisher. If a stable existing desk, lamp, and storage are already suitable, the Stage 1 setup plus the essential mat, extractor, glasses, extinguisher, and grounded power strip is about **₾795.90**.
 
 Do not energize a flight controller until a suitable **smoke stopper/current limiter** is in hand. A ready-made one was not verified in live Tbilisi inventory. A suitable **LiPo-safe charging/storage arrangement** was also not verified locally. Both are explicit stop points, not optional accessories.
 
@@ -42,11 +42,11 @@ Do not energize a flight controller until a suitable **smoke stopper/current lim
 | Alternative | Same footprint, cheaper | [JYSK ASTRUP 60×120](https://jysk.ge/en/product/desk-astrup-60x120-black-3650044) | ₾137.40 | Online/in-store stock was shown, but no load rating was published. |
 | Alternative | Height-adjustable bench | [JYSK SVANEKE 60×120](https://jysk.ge/en/product/standing-desk-svaneke-60x120-black/) | ₾599.40 | Ergonomic luxury, not required. One unit was shown at Agmashenebeli Alley. |
 | Buy | Grounded, switched five-socket strip with overload/surge protection | [PrimeStore 2E-SP515M2WH, 2 m](https://primestore.ge/2e-power-strip-with-surge-protector-5xtype-f-3x1-5mm2-16a-2m-white.html?sl=en) | ₾59.00 | In stock; 16 A/3680 W, H05VV-F 3G×1.5 mm² copper cable, switch, grounding/protection indicators. Do not daisy-chain strips. |
-| Buy | Movable task light | [Domino Camelion KD-331](https://www.domino.com.ge/en/products-en/electrical-goods-en/page-188/?items_per_page=24&layout=short_list&sort_by=product&sort_order=desc) | ₾53.00 | Catalog showed nine. Alternatives on the same page were roughly ₾65–₾70.50. |
-| Buy | Large toolbox with separated top storage | Domino Patrol Formula Carbo S600, 547×271×278 mm, code 08010850; find it on [Domino tools page 28](https://www.domino.com.ge/en/products-en/tools-en-2/page-28/) | ₾67.00 | 32 L, lid organizer and inner tray; catalog showed 28. Large enough for iron, meter, hand tools, and consumables. |
-| Buy | Small-parts organizer | Domino Patrol Tandem C400, 385×283×50 mm, code 08010562; find it on [Domino tools page 28](https://www.domino.com.ge/en/products-en/tools-en-2/page-28/) | ₾22.90 | Current listing showed stock. Budget B300 was ₾11.15. Use labeled compartments; keep lead-contaminated supplies separate. |
-| Buy | Heat-resistant work surface | [DAC 8953 silicone repair mat](https://dac.ge/en/?product=47571) | ₾36.00 | In stock. Listing dimensions appear mistyped as 26×36 **mm**; call to confirm they mean approximately 26×36 **cm**. |
-| Buy | Source-capture fume extractor | [DAC FA400, 19 W](https://dac.ge/en/?product=47001) | ₾90.00 | In stock at all three branches; replacement five-filter pack was ₾19.50. Put the inlet close to the joint and ventilate the room. |
+| Buy | Movable task light | [Domino Camelion KD-331 C04 red — product 40283](https://www.domino.com.ge/index.php?sl=en&dispatch=products.view&product_id=40283) | ₾59.00 | Exact product route opened in Brave; code 13012479 and 13 units were shown. Requires an E27 bulb. |
+| Buy | Large toolbox with separated top storage | [Domino Patrol Formula Carbo S600 — product 168680](https://www.domino.com.ge/index.php?sl=en&dispatch=products.view&product_id=168680) | ₾78.90 | Exact product route opened in Brave; code 08010850 and 17 units were shown. 32 L with lid organizer and inner tray. |
+| Buy | Small-parts organizer | [Domino Patrol Tandem C400 — product 39954](https://www.domino.com.ge/index.php?sl=en&dispatch=products.view&product_id=39954) | ₾22.90 | Exact product route opened in Brave; code 08010562 and 42 units were shown. Use labeled compartments; keep lead-contaminated supplies separate. |
+| Buy | Heat-resistant work surface | [DAC 8953 silicone repair mat](https://dac.ge/en/?product=47571) | ₾31.00 | Exact product page opened in Brave. Listing dimensions appear mistyped as 26×36 **mm**; call to confirm they mean approximately 26×36 **cm**. |
+| Wait / replace | Source-capture fume extractor | [DAC FA400, 19 W](https://dac.ge/en/?product=47001) | ₾90.00 | Exact product page opens, but live product data showed **out of stock** during the re-audit. Do not count it as currently buyable; ask DAC for a restock date or source an equivalent local extractor before soldering. |
 | Buy | EN-rated eye protection | [Biolux clear safety glasses](https://veli.store/en/details/safety-glasses-biolux/?sku=5450564000445) | ₾25.00 | Seller listed EN166/EN170 and buy-now delivery. [Coverguard goggles at M2M](https://m2m.ge/en/product/safety-goggles/) are an anti-fog alternative; call for price. |
 | Call | 4 kg ABCE dry-powder extinguisher | [BigChoice 4 kg ABCE extinguisher](https://bigchoice.ge/en/product/%E1%83%A4%E1%83%AE%E1%83%95%E1%83%9C%E1%83%98%E1%83%9A%E1%83%9D%E1%83%95%E1%83%90%E1%83%9C%E1%83%98-%E1%83%AA%E1%83%94%E1%83%AA%E1%83%AE%E1%83%9A%E1%83%9B%E1%83%90%E1%83%A5%E1%83%A0%E1%83%98-4/) | ₾55.00 | Product and price published, but no unambiguous live-stock count. Reserve before pickup. Intended for bench/surrounding electrical or ordinary fires—not as a promise to stop LiPo thermal runaway. |
 
@@ -60,21 +60,21 @@ Do not solder directly on the melamine desk. Use the silicone mat and place a sa
 
 | Priority | Item and minimum specification | Local recommendation | Price | Why / alternatives |
 |---|---|---|---:|---|
-| Buy | Temperature-controlled cartridge iron, roughly 70 W | [DAC T210 station](https://dac.ge/en/?product=47630) | ₾175.00 | In stock at all three branches; 72 W, 120–450 °C. **Call to confirm** the box contains the handpiece, safe stand, and a broad 2–3 mm chisel/hoof tip. If it does not, add a suitable [T210 tip](https://dac.ge/en/?product=47618) for about ₾26. |
+| Buy | Temperature-controlled cartridge iron, roughly 70 W | [DAC T210 station](https://dac.ge/en/?product=47630) | ₾175.00 | Exact product page opened in Brave; 72 W, 120–450 °C. **Call to confirm** the box contains the handpiece, safe stand, and a broad 2–3 mm chisel/hoof tip. If it does not, add the verified [C210-D18 / T210-018 broad tip](https://dac.ge/en/?product=48303) for about ₾26. The former `product=47618` link was a relay, not a soldering tip. |
 | Alternative | Lower-cost cartridge station | [DAC T12 station](https://dac.ge/en/?product=47631) | ₾120.00 | 75 W, 150–480 °C, in stock. Saves ₾55, but tip/stand inclusion and locally stocked broad tip shapes still need confirmation. |
 | Alternative | Portable USB-C/DC iron | [Edison Miniware TS101](https://edisonstore.ge/shop/soldering/soldering-irons/ts101/) | ₾259.00 | In stock; seller states up to 65 W USB-C PD / 90 W DC. Only choose it after confirming the included tip and adding a correctly rated PD supply, cable, and safe stand if absent. |
 | Alternative | One-box budget kit | [Edison soldering kit](https://edisonstore.ge/shop/soldering/soldering-irons/soldering-kit/) | ₾130.00 | Includes regulated 60 W iron, DT9205A meter, stand, sponge, solder, cutters, stripper, tweezers, knife and screwdrivers. Lower-confidence tools, but a viable budget start; it does **not** replace the extractor, mat, eye protection, good no-clean flux, practice material, or smoke stopper. |
 | Buy | Brass tip cleaner | [DAC brass tip cleaner](https://dac.ge/en/?product=46285) | ₾20.00 | In stock. Brass is preferable to repeatedly thermal-shocking the tip with a wet sponge. |
 | Buy | Fine electronics solder | [DAC Sn63/Pb37, 0.8 mm, 50 g](https://dac.ge/en/?product=47549) | ₾12.00 | In stock. Eutectic leaded solder is forgiving for learning. Treat the whole solder area as lead-contaminated; wash hands and never eat or drink there. |
-| Buy | Electronics no-clean flux | [DAC AMTECH NC-559-ASM, 100 g](https://dac.ge/en/?product=46571) | ₾29.50 | In stock. Confirm the container is sealed and check batch/expiry. Never substitute acid/plumbing flux. |
+| Buy | Electronics no-clean flux | [DAC AMTECH NC-559-ASM, 100 g](https://dac.ge/en/?product=46571) | ₾25.30 | Exact product page opened in Brave. Confirm the container is sealed and check batch/expiry. Never substitute acid/plumbing flux. |
 | Buy | Desoldering braid, about 2 mm | [DAC 2.0 mm × 1.5 m solder wick](https://dac.ge/en/?product=5905) | ₾7.50 | In stock. Add flux before using it. |
 | Buy | Digital multimeter with continuity buzzer | [Edison UNI-T UT33D+](https://edisonstore.ge/shop/measuring-tools/multimeters/multimeter-uni-t-ut33d/) | ₾85.00 | In stock. Default because it is a known meter with continuity/voltage functions. [UNI-T UT39A+](https://edisonstore.ge/shop/measuring-tools/multimeters/multimeter-uni-t-ut39a/) was ₾95. |
-| Buy | Rigid PCB holder | DAC 0501 360° holder in [soldering equipment](https://dac.ge/en/?category=27) | ₾56.00 | In stock; seller lists maximum board around 200×140 mm. Safer and more repeatable than holding a board with fingers or improvised putty. |
+| Buy | Rigid PCB holder | [DAC 0501 adjustable PCB holder](https://dac.ge/en/?product=46027) | ₾56.00 | Exact product page opened in Brave; seller lists maximum board around 200×140 mm. Safer and more repeatable than holding a board with fingers or improvised putty. |
 | Buy | Lit magnification | [DAC 0502 magnifier](https://dac.ge/en/?product=46137) | ₾39.00 | In stock; 3.5×/12× and two LEDs. DAC 0504 at about ₾68 is the better premium option. |
 | Buy | Fine-wire stripper | [DAC 9442 wire stripper](https://dac.ge/en/?product=45865) | ₾44.00 | In stock. Listing says 0.2–0.6 mm wire diameter; bring or describe 24–30 AWG stranded silicone wire and confirm it strips without nicking strands. |
 | Buy | Flush/side cutter | [DAC 8483 side cutter](https://dac.ge/en/?product=45821) | ₾12.80 | In stock at all three branches. Do not use the fine cutter on steel screws or hardened wire. |
 | Buy | Fine ESD-safe tweezers | [Edison ESD tweezers](https://edisonstore.ge/shop/instruments/tools/eds/) | ₾9.00 | In stock when checked. |
-| Buy | 9 mm utility knife and spare blades | [Edison tools](https://edisonstore.ge/product-category/instruments/tools/) | ₾3.30 | About ₾1.50 for knife plus ₾1.80 blades. Cut away from wires, cells, and hands. |
+| Buy | 9 mm utility knife and spare blades | [Tolsen 9 mm utility knife](https://edisonstore.ge/shop/instruments/tools/tolsen-cutting-knife-plastic-9mm/) + [Tolsen spare blades](https://edisonstore.ge/shop/instruments/tools/tolsen-mini-knife-blade/) | ₾3.30 | Exact product routes, about ₾1.50 for knife plus ₾1.80 blades. Cut away from wires, cells, and hands. |
 | Buy | 99% isopropyl alcohol | [Edison IPA 99.7%, 1 L](https://edisonstore.ge/shop/consumables/soldering-iron-tip-cleaner/alcohol/) | ₾17.00 | In stock. Highly flammable: close the bottle and move it away before powering the iron. |
 | Buy | Soft toothbrush / ESD brush and lint-free swabs | Local pharmacy or electronics shop | ₾5.00 allowance | Use sparingly with IPA after the joint cools. Do not power wet boards. |
 | Buy | Unpowered practice bundle | See next section | ₾25.00 allowance | Enough material for repeated fine-wire, through-hole, header, and large-pad exercises before touching an FC or ESC. |
@@ -116,15 +116,15 @@ These are tools and consumables, not permission to buy the drone. Recheck them a
 
 | Priority | Item | Local recommendation | Price | Important limit |
 |---|---|---|---:|---|
-| Buy | General precision screwdriver/bit/socket set | [Domino Truper JDM-58, 56 pieces](https://www.domino.com.ge/en/products-en/tools-en-2/hand-tools/screwdrivers-screwdriver-sets/screwdriver-and-bit-set-truper-jdm-58-56-pcs/) | ₾45.00 | Catalog showed 61. Includes H2/H2.5/H3, PH0/PH1, and 5–8 mm sockets. It lacks H1.5 and is not as good as handled RC hex drivers. |
-| Buy | Metric hex-key stopgap, 1.5–8 mm | DAC 9601 in [hex and Torx tools](https://dac.ge/en/?category=19&subcategory=66) | ₾16.60 | In stock. Provides the missing 1.5 mm size. Replace with true handled 1.5/2.0/2.5 mm RC drivers when a local shop confirms stock. |
-| Buy | Fine long-nose pliers | DAC 8391/8431 in [hand tools](https://dac.ge/en/?category=19) | ₾12.80 | About ₾12.80–₾12.90 and in stock. Do not use pliers as a nut driver where a socket fits. |
-| Buy | Assorted heat-shrink tubing | [Edison heat-shrink range](https://edisonstore.ge/product-tag/heat-shrink/) | ₾24.00 | 328-piece, eight-size assortment was listed. Confirm sizes fit the final wire/connectors. |
-| Buy | Small nylon cable ties | [Edison consumables](https://edisonstore.ge/product-category/consumables/) | ₾3.00 | 2.5×100 mm pack. Do not crush coax, antenna feedline, or soft silicone wire. |
-| Buy | Electrical tape | [Edison insulating tape](https://edisonstore.ge/product-category/insulation-materials/insulating-tape/) | ₾2.00 | Black 19 mm × 9.15 m. Heat shrink is preferable for permanent wire insulation. |
-| Buy | Double-sided foam mounting pads | Domino Boss Tape 3845 in [adhesives](https://www.domino.com.ge/en/products-en/building-materials-en/page-14/?items_per_page=48&layout=products_without_options&sort_by=timestamp&sort_order=desc) | ₾9.60 | Four 40×45 mm pads; catalog showed 42. Long-term vibration adhesion is unverified—add mechanical retention where possible. |
-| Buy | Masking tape | Domino Hardy 48 mm × 25 m in [adhesives](https://www.domino.com.ge/en/products-en/building-materials-en/page-14/?items_per_page=48&layout=products_without_options&sort_by=timestamp&sort_order=desc) | ₾4.50 | Catalog showed eight. Useful as a removable spatter guard; remove before flight. |
-| Buy | Two-temperature heat gun | [Domino Tolsen TOL79100, 2000 W](https://www.domino.com.ge/en/products-en/tools-en-2/dryers-thermal-guns/technical-dryer-tolsen-tol79100-2000w/) | ₾61.00 | Catalog showed 13; 350/500 °C and 300/500 L/min. Use low setting, keep moving, and keep away from LiPo cells/electronics. Never use a lighter. |
+| Buy | General precision screwdriver/bit/socket set | [Domino Truper JDM-58 — product 159458](https://www.domino.com.ge/index.php?sl=en&dispatch=products.view&product_id=159458) | ₾45.00 | Exact product route opened in Brave; code 08023018 and 21 sets were shown. Includes H2/H2.5/H3, PH0/PH1, and 5–8 mm sockets. It lacks H1.5. |
+| Buy | Metric hex-key stopgap, 1.5–8 mm | [DAC 9601 eight-piece hex-key set](https://dac.ge/en/?product=4808) | ₾16.60 | Exact product page opened in Brave. Provides the missing 1.5 mm size. Replace with true handled 1.5/2.0/2.5 mm RC drivers when a local shop confirms stock. |
+| Buy | Fine long-nose pliers | [DAC 8431 half-round pliers, 125 mm](https://dac.ge/en/?product=45824) | ₾12.90 | Exact product page opened in Brave. Do not use pliers as a nut driver where a socket fits. |
+| Buy | Assorted heat-shrink tubing | [Edison 328-piece heat-shrink kit](https://edisonstore.ge/shop/insulation-materials/heat-shrink-tubing/heatshrinkable-tube-kit/) | ₾24.00 | Exact 13176 product listing, eight sizes and five colors. Confirm sizes fit the final wire/connectors. |
+| Buy in store | Small nylon cable ties | Edison 2.5×100 mm pack, product counter | ₾3.00 | No reliable exact product URL was exposed, so the old category link was removed. Ask for the 2.5×100 mm pack. Do not crush coax, antenna feedline, or soft silicone wire. |
+| Buy in store | Electrical tape | Edison black 19 mm × 9.15 m, product 95008 | ₾2.00 | The item appears in the live category but no reliable exact product URL was exposed, so the old category link was removed. Heat shrink is preferable for permanent wire insulation. |
+| Buy | Double-sided foam mounting pads | [Domino Boss Tape 3845 — product 167875](https://www.domino.com.ge/index.php?sl=en&dispatch=products.view&product_id=167875) | ₾10.70 | Exact product route opened in Brave; code 08010905 and 80 packs were shown. Four 40×45 mm pads. Add mechanical retention where possible. |
+| Buy | Masking tape | [Domino Hardy 48 mm × 25 m — product 168474](https://www.domino.com.ge/index.php?sl=en&dispatch=products.view&product_id=168474) | ₾4.50 | Exact product route opened in Brave; code 08031855 and 110 rolls were shown. Remove before flight. |
+| Buy | Two-temperature heat gun | [Domino Tolsen TOL79100 — product 22210](https://www.domino.com.ge/index.php?sl=en&dispatch=products.view&product_id=22210) | ₾43.00 sale | Exact product route opened in Brave; code 08041212 and 57 units were shown. Use low setting, keep moving, and keep away from LiPo cells/electronics. Never use a lighter. |
 | Buy | Removable medium-strength threadlocker | [RPM MA Professional blue, 10 ml](https://rpm.ge/en/product/ma-professional-threadlocker-medium-blue-10ml/) | ₾10.00 | Listed in stock. Tiny amount on clean **metal-to-metal** threads only. Never red/permanent grade and never on plastic. |
 
 ### Still required, but not locally verified
@@ -144,7 +144,7 @@ An 8 mm socket is already in the Truper kit for common SMA/prop-nut work. Use a 
 |---|---|---|---:|---|
 | Later / call | Balance charger with storage mode | [HobiTec HTRC C150 AC/DC, 150 W/10 A](https://hobitec.ge/ge/product/htrc-c150-smart-balancer-charger-ac-dc-150w-10a-discharger-for-rc-lipo-lihv-life-lilon-nicd-nimh-pb-battery/) | ₾199.00 | Seller catalog showed in-stock/add-to-cart. Before buying, confirm exact battery chemistry/cell count, AC cord, balance board, charge leads, connector gender, per-channel current, and manual authenticity. |
 | Alternative / call | 1–6S balance charger | [RcParts SkyRC iMAX B6](https://rcparts.ge/?product=skyrc-imax-b6) | ₾160.00 | Listing showed add-to-cart and storage mode, but it requires 11–18 V DC and the package list did not show a power supply. Do not buy it alone. |
-| Buy later | 0–150 mm digital caliper | [DAC 8626](https://dac.ge/en/?category=19&product=48704&subcategory=72) | ₾92.00 | In stock; 0.01 mm display resolution. Record actual repeatability rather than assuming the last digit is laboratory accuracy. |
+| Buy later | 0–150 mm digital caliper | [DAC 8626 digital caliper](https://dac.ge/en/?product=48705) | ₾92.00 | Exact product page opened in Brave; 0.01 mm display resolution. The former `product=48704` link was not this caliper. Record actual repeatability rather than assuming the last digit is laboratory accuracy. |
 | Buy later | 5 kg / 1 g scale | [Sportmaster electronic kitchen scale](https://sportmaster.ge/en/product/%E1%83%94%E1%83%9A%E1%83%94%E1%83%A5%E1%83%A2%E1%83%A0%E1%83%9D%E1%83%9C%E1%83%A3%E1%83%9A%E1%83%98-%E1%83%A1%E1%83%90%E1%83%9B%E1%83%96%E1%83%90%E1%83%A0%E1%83%94%E1%83%A3%E1%83%9A%E1%83%9D%E1%83%A1/) | ₾25.00 | Suitable for whole-aircraft and BOM mass at 1 g resolution; always measure, never claim an estimated finished weight. |
 | Gap | LiPo charging/storage container and noncombustible charging position | No credible orderable Tbilisi listing verified | — | Call both RC shops and the fire-safety supplier. A soft “LiPo bag” alone is not proof of full thermal-runaway containment. Final setup must follow the chosen battery maker/charger guidance. |
 | Gap | Smoke stopper/current limiter | No local listing verified | — | Hard stop before first battery connection. Connector and voltage range must match the final build. |
@@ -158,13 +158,13 @@ Do not buy the cheap 2S/3S-only “B3 Pro” charger for a provisional build who
 
 | Calculation | Total |
 |---|---:|
-| Stage 0: 200 + 59 + 53 + 67 + 22.90 + 36 + 90 + 25 + 55 | **₾607.90** |
-| Stage 1: 175 + 20 + 12 + 29.50 + 7.50 + 85 + 56 + 39 + 44 + 12.80 + 9 + 3.30 + 17 + 25 + 5 | **₾540.10** |
-| Immediate complete setup | **₾1,148.00** |
-| Stage 2: 45 + 16.60 + 12.80 + 24 + 3 + 2 + 9.60 + 4.50 + 61 + 10 | **₾188.50** |
-| Known assembly-ready total | **₾1,336.50** |
+| Stage 0: 200 + 59 + 59 + 78.90 + 22.90 + 31 + 90 + 25 + 55 | **₾620.80** |
+| Stage 1: 175 + 20 + 12 + 25.30 + 7.50 + 85 + 56 + 39 + 44 + 12.80 + 9 + 3.30 + 17 + 25 + 5 | **₾535.90** |
+| Immediate priced setup | **₾1,156.70** |
+| Stage 2: 45 + 16.60 + 12.90 + 24 + 3 + 2 + 10.70 + 4.50 + 43 + 10 | **₾171.70** |
+| Known assembly-ready total | **₾1,328.40** |
 | Stage 3 known tools: 199 + 92 + 25 | **₾316.00** |
-| Known eventual total | **₾1,652.50** |
+| Known eventual total | **₾1,644.40** |
 
 Not included: delivery, a potentially required broad T210 tip (+about ₾26), smoke stopper, LiPo-safe charging/storage provision, final USB data cable, charger adapters/leads, replacement extractor filters, or price changes.
 
@@ -172,7 +172,7 @@ Not included: delivery, a potentially required broad T210 tip (+about ₾26), sm
 
 | Change | Approximate effect | Trade-off |
 |---|---:|---|
-| Use existing sound desk, light, and storage | Immediate setup becomes about **₾805.10** | Existing surface must still be stable; keep mat, extractor, glasses, extinguisher, and grounded strip |
+| Use existing sound desk, light, and storage | Immediate setup becomes about **₾795.90** | Existing surface must still be stable; keep mat, extractor, glasses, extinguisher, and grounded strip |
 | Choose T12 instead of T210 | Save **₾55**; full immediate setup **₾1,093.00** | Confirm safe stand, included tip, and locally available broad-tip path |
 | Choose JYSK ASTRUP instead of VANDBORG | Save **₾62.60** | No published load rating was found |
 | Start from the Edison ₾130 kit | Roughly **₾940–₾950** full immediate setup after adding the missing recommended items | Exact saving depends on whether the included solder and knife are acceptable. It accepts lower-confidence iron/meter/hand tools; still buy proper flux, brass cleaner, practice material, and every safety item. |
